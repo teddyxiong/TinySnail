@@ -1,0 +1,31 @@
+CREATE TABLE `users` (
+		`uid` bigint(20) NOT NULL AUTO_INCREMENT ,
+		`binduid` int(11) NOT NULL DEFAULT '0',
+		`login_name` varchar(64) NOT NULL,
+		`user_name` varchar(64) NOT NULL,
+		`user_password_hash` char(60) NOT NULL,
+		`avatar` char(200) NOT NULL,
+		`user_email` varchar(64) NOT NULL,
+		`user_active` tinyint(1) NOT NULL DEFAULT '0' comment '用户状态',
+		`user_activation_hash` varchar(40) DEFAULT NULL comment '邮件验证',
+		`user_password_reset_hash` char(40) DEFAULT NULL,
+		`user_password_reset_timeline` int(11) DEFAULT NULL,
+		`user_rememberme_token` varchar(64) DEFAULT NULL comment 'cookie中的token',
+		`user_registration_timeline` int(11) NOT NULL DEFAULT '0',
+		`user_registration_ip` varchar(39) NOT NULL DEFAULT '0.0.0.0',
+		`user_last_timeline` int(11) NOT NULL DEFAULT '0',
+		`user_last_ip` varchar(39) NOT NULL DEFAULT '0.0.0.0',
+		PRIMARY KEY (`uid`),
+		UNIQUE KEY `user_name` (`user_name`),
+		UNIQUE KEY `user_email` (`user_email`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `bind_users` (
+		`binduid` bigint(20) NOT NULL AUTO_INCREMENT ,
+		`user_source` varchar(64) NOT NULL comment 'weibo github qq google',
+		`login_name` varchar(64) NOT NULL,
+		`user_name` varchar(64) NOT NULL,
+		`user_email` varchar(64) NOT NULL,
+		`extend` text default '',
+		PRIMARY KEY (`binduid`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
