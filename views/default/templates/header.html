@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="任务">
+<meta name="author" content="genghonghao@gmail.com">
+<link rel="shortcut icon" href="{{$docs_assets_domain}}/ico/favicon.ico">
+
+<title>{{$title}}</title>
+
+<!-- Bootstrap -->
+<link href="{{$bootstrap_domain}}/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+<!-- Custom styles for this template -->
+<link href="{{$portal_domain}}/css/global.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="{{$docs_assets_domain}}/docs-assets/js/html5shiv.js"></script>
+<script src="{{$docs_assets_domain}}/docs-assets/js/respond.min.js"></script>
+<![endif]-->
+</head>
+<body>
+
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">{{$project}}</a>
+		</div>
+	<div class="navbar-collapse collapse">
+		<ul class="nav navbar-nav">
+			<!--li><a href="#">首页</a></li-->
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="#">用户排行</a></li>
+			<li><a href="#">精品任务</a></li>
+			<li><a href="#">帮助中心</a></li>
+			{{if $uid}}
+			<li><a href="javascript:void(0);"><img src='{{$userinfo.avatar|escape:"htmlall"}}' class="img-rounded" height="20" width="20"/>
+			{{$userinfo.user_name}}
+			&nbsp;
+			  <span class="glyphicon glyphicon-plus-sign" id="create" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="添加任务"></span> 
+			&nbsp;
+			  <span class="glyphicon glyphicon-cog" id="setting" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="偏好设置"></span> 
+			&nbsp;
+			  <span class="glyphicon glyphicon-log-out" id="signout" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="退出"></span> 
+			</a></li>
+			{{else}}
+			<li><button type="button" id="signin" class="btn btn-default navbar-btn">使用github帐号登录</button></li>
+			{{/if}}
+		</ul>
+	</div><!--/.nav-collapse -->
+	</div>
+</div>

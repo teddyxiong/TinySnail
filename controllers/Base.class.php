@@ -7,5 +7,7 @@ class Base {
 	public function __construct()
 	{
 		$this->tpl = new Template();
+		$this->tpl->assign('userinfo', User::getCurrentLoginUser());
+		$this->tpl->assign('uid', User::getUid());
 	}
 }

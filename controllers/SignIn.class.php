@@ -39,11 +39,11 @@ class SignIn extends Base{
 			$userinfo = $user_model->getUserByUid($uuid);
 
 			$cookie_info = [
-				'loginuser_uid'=>$userinfo['uid'],
-				'pwd'=>$userinfo['user_password_hash'],
+				'uid'=>$userinfo['uid'],
+				'user_password'=>$userinfo['user_password_hash'],
 				'binduid'=>$userinfo['binduid'],
-				'loginuser_name'=>$userinfo['user_name'],
-				'loginuser_avatar'=>$userinfo ['avatar'],
+				'user_name'=>$userinfo['user_name'],
+				'avatar'=>$userinfo ['avatar'],
 				'user_email'=>$userinfo['user_email']
 			];
 			// 登录
