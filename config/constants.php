@@ -16,4 +16,6 @@ define('AUTHORIZATION_ENDPOINT', 'https://github.com/login/oauth/authorize');
 define('TOKEN_ENDPOINT', 'https://github.com/login/oauth/access_token');
 define('USER_API_URI', 'https://api.github.com/user');
 
+define('SN_GITHUB_FLAG', 'github');
+
 ?>

@@ -11,7 +11,7 @@ ob_start();
 
 define('DS', DIRECTORY_SEPARATOR);
 define('PATH_ROOT', dirname(__FILE__));
-
+define('DOMAIN', 'http://snail.sanrenbang.net');
 
 define('PATH_CONF', PATH_ROOT.'/config');
 define('PATH_CACHE', PATH_ROOT.'/cache');

@@ -37,9 +37,9 @@ class User {
 
 			if($info['uid'] > 0 && (@$sign == @$info ['sign'])) {
 				$user = array('loginuser_uid'=>$info ['uid'], 
-						'loginuser_name'=>$info['id'],
-						'loginuser_avatar'=>$info ['avatar_url'],
-						'email'=>$info['email']
+						'loginuser_name'=>$info['user_name'],
+						'loginuser_avatar'=>$info ['avatar'],
+						'user_email'=>$info['user_email']
 						);
 				return $user;
 			}
@@ -48,8 +48,27 @@ class User {
 		return null;
 	}
 
-	static function setCookie($key, $value, $cookie_time = 0, $cookie_domain = 'snail.sanrenbang.net', $cookie_path = '/', $secure = false, $httponly = false) {
+	function setCookie($key, $value, $cookie_time = 86400, $cookie_domain = 'snail.sanrenbang.net', $cookie_path = '/', $secure = false, $httponly = false) {
 
+		$cookie_time += time();
 		return setcookie($key,$value,$cookie_time,$cookie_path,$cookie_domain,$securei,$httponly);
+	}
+
+	function setSiteCookie($info, $cookie_time=86400) {
+		$sign = md5(substr(md5($info['pwd']), 0, 20 ).'Snail'.substr(md5($info['uid'].$info 
+						['binduid'] ), 10, 20 ) );
+
+		$user = [
+			'loginuser_uid'=>$info['uid'], 
+			'pwd'=>$info['pwd'], 
+			'binduid'=>$info['binduid'], 
+			'loginuser_name'=>$info['user_name'],
+			'loginuser_avatar'=>$info ['avatar'],
+			'user_email'=>$info['user_email'],
+			'sign'=>$sign
+		];
+
+		$value = http_build_query($user);
+		$this->setCookie(self::COOKIENAME, $value, $cookie_time);
 	}
 }

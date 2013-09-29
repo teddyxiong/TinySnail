@@ -138,4 +138,44 @@ function stripslashes_deep($value)
 		return is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value);
 	}
 }
+
+function get_client_ip()
+{
+	if(getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
+		$onlineip = getenv('HTTP_CLIENT_IP');
+	} elseif(getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown')) {
+		$onlineip = getenv('HTTP_X_FORWARDED_FOR');
+	} elseif(getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown')) {
+		$onlineip = getenv('REMOTE_ADDR');
+	} elseif(isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
+		$onlineip = $_SERVER['REMOTE_ADDR'];
+	}
+	return $onlineip;
+}
+
+function redirect($url)
+{
+	if(!empty($url))
+	{
+		header("Location: ".$url."");
+	}
+	exit;
+}
+
+function object_to_array($e){
+	$e=(array)$e;
+	foreach($e as $k=>$v){
+		if( gettype($v)=='resource' ) return;
+		if( gettype($v)=='object' || gettype($v)=='array' )
+			$e[$k]=(array)objectToArray($v);
+	}
+	return $e;
+}
+
+function display_error_page($title, $text) {
+	$error_title = $title;
+	$error_content = $test;
+	require PATH_ROOT.DS.'error.php';                                           
+	exit;
+}
 ?>
