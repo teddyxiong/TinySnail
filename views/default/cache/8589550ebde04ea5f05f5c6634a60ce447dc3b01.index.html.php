@@ -5,13 +5,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '8589550ebde04ea5f05f5c6634a60ce447dc3b01' => 
     array (
       0 => '/HTML/TinySnail/views/default/templates/index.html',
-      1 => 1380477128,
+      1 => 1380477379,
       2 => 'file',
     ),
     '2c4657a943f92100ecdd259f8e5e29410137e8ff' => 
     array (
       0 => '/HTML/TinySnail/views/default/templates/header.html',
-      1 => 1380472920,
+      1 => 1380477395,
       2 => 'file',
     ),
     '297275e32982029241fc6c7f23e081fe105db491' => 
@@ -24,10 +24,10 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'nocache_hash' => '91001765952470405998015-50244973',
   'cache_lifetime' => 3600,
   'version' => 'Smarty-3.1.13',
-  'unifunc' => 'content_524868cae6cde1_15198126',
+  'unifunc' => 'content_5249020beb3545_75686877',
   'has_nocache_code' => false,
 ),true); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_524868cae6cde1_15198126')) {function content_524868cae6cde1_15198126($_smarty_tpl) {?><!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_5249020beb3545_75686877')) {function content_5249020beb3545_75686877($_smarty_tpl) {?><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
