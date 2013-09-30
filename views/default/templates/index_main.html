@@ -1,0 +1,37 @@
+<div class="col-xs-12 col-sm-8"> <!--span-->
+<div class="panel panel-default">
+<!-- Default panel contents -->
+<div class="panel-heading">任务守则</div>
+<div class="panel-body">
+<button type="button" class="btn btn-primary">发布任务</button>
+<button type="button" class="btn btn-primary">发布文章</button>
+&nbsp;&nbsp;
+快速帮助：
+<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_tent">宗旨</button>
+<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_rule">规则</button>
+<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_philosophy">哲学</button>
+<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_integral">积分</button>
+</div>
+
+<!-- tasks list-->
+<ul class="list-group">
+<li class="list-group-item">
+<span class="badge">1</span>
+想问一下各位，你们公司的线上Linux服务器都是无GUI环境的吗？
+<p>111</p>
+</li>
+<li class="list-group-item">
+<span class="badge">12</span>
+为什么Xcode5在默认开启ARC的情况下，通过模版创建工程，默认生成的NSWindow的IBOutlet还是assign的呢？
+</li>
+
+</ul>
+
+</div>
+</div> 
+
+<!--模态框的帮助内容-->
+{{include file="$template_path/help_model_tent.html"}}
+{{include file="$template_path/help_model_integral.html"}}
+{{include file="$template_path/help_model_rule.html"}}
+{{include file="$template_path/help_model_philosophy.html"}}

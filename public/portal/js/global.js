@@ -13,5 +13,14 @@ $('#create').tooltip('hide');
 $('#signout').tooltip('show');
 $('#signout').tooltip('hide');
 
-$('#helpModal').modal('show');
-$('#helpModal').modal('hide');
+$('#help_tent').modal('show');
+$('#help_tent').modal('hide');
+
+$('#help_rule').modal('show');
+$('#help_rule').modal('hide');
+
+$('#help_integral').modal('show');
+$('#help_integral').modal('hide');
+
+$('#help_philosophy').modal('show');
+$('#help_philosophy').modal('hide');
