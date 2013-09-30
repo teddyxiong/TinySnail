@@ -38,7 +38,7 @@ class User {
 			if($info['uid'] > 0 && (@$sign == @$info['sign'])) {
 				$user = array('uid'=>$info['uid'], 
 						'user_name'=>$info['user_name'],
-						'avatar'=>urldecode($info['avatar']),
+						'avatar'=>rawurldecode($info['avatar']),
 						'user_email'=>$info['user_email']
 						);
 				return $user;
@@ -62,7 +62,7 @@ class User {
 			'user_password'=>$info['user_password'], 
 			'binduid'=>$info['binduid'], 
 			'user_name'=>$info['user_name'],
-			'avatar'=>urlencode($info['avatar']),
+			'avatar'=>$info['avatar'],
 			'user_email'=>$info['user_email'],
 			'sign'=>$sign
 		];

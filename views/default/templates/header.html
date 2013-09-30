@@ -43,7 +43,7 @@
 			<li><a href="#">用户排行</a></li>
 			<li><a href="#">精品任务</a></li>
 			<li><a href="#">帮助中心</a></li>
-			{{if $uid}}
+			{{if $userinfo.user_name}}
 			<li><a href="javascript:void(0);"><img src='{{$userinfo.avatar|escape:"htmlall"}}' class="img-rounded" height="20" width="20"/>
 			{{$userinfo.user_name}}
 			&nbsp;
