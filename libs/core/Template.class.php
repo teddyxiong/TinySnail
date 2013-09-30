@@ -16,7 +16,8 @@ class Template extends Smarty {
 		$this->left_delimiter = "{{";
 		$this->right_delimiter = "}}";
 
-		$this->caching = Smarty::CACHING_LIFETIME_CURRENT;
+		//$this->caching = Smarty::CACHING_LIFETIME_CURRENT;
+		$this->caching = 0;
 		$this->assign('project', 'TinySnail');
 		$this->assign('title', 'TinySnail-任务发生器。');
 		$this->assign('template_path', PATH_VIEWS.DS.'default/templates');
