@@ -1,10 +1,10 @@
 // signin
 $("button#signin").click(function(){
-	location.href = "?action=sign_in";
+	location.href = "/signin";
 });
 // signout
 $("span#signout").click(function(){
-	location.href = "?action=sign_out";
+	location.href = "/signout";
 });
 $('#setting').tooltip('show')
 $('#setting').tooltip('hide')
