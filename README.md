@@ -11,3 +11,4 @@ rewrite ^/signin/?$ /index.php?controller=sign_in last;
 
 rewrite ^/signout/?$ /index.php?controller=sign_out last;
 
+rewrite ^/addtask/?$ /index.php?controller=add_task last;

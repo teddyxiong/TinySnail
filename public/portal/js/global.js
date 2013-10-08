@@ -6,6 +6,12 @@ $("button#signin").click(function(){
 $("span#signout").click(function(){
 	location.href = "/signout";
 });
+
+// entry the task 
+$("button#add_task").click(function(){
+	location.href = "/addtask";
+});
+
 $('#setting').tooltip('show')
 $('#setting').tooltip('hide')
 $('#create').tooltip('show');
