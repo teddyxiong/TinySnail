@@ -153,10 +153,13 @@ function get_client_ip()
 	return $onlineip;
 }
 
-function redirect($url)
+function redirect($url, $is301=false)
 {
 	if(!empty($url))
 	{
+		if (false != $is301) {
+			header('HTTP/1.1 301 Moved Permanently');  
+		}
 		header("Location: ".$url."");
 	}
 	exit;

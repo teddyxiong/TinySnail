@@ -1,0 +1,21 @@
+{{include file="$template_path/header.html"}}
+
+<div class="container">
+
+<div class="panel panel-default">
+<!-- Default panel contents -->
+<div class="panel-heading">跳转中，请稍后...</div>
+<div class="panel-body">
+<p class="text-center ">非常感谢，您的{{$callback_info.label_txt_1}}已经发布，现在将进入{{$callback_info.label_txt_2}}页。</p>
+<p class="text-center "><a href="{{$callback_info.plans_url}}" target="_self">[ 需要进入{{$callback_info.label_txt_3}}页请点击这里 ]</a><p>
+<p class="text-center "><a href="{{$callback_info.default_url}}" target="_self">如果您的浏览器没有自动跳转，请点击这里。</a></p>
+</div>
+</div>
+<script>
+setTimeout("window.location.href='{{$callback_info.default_url}}'", {{$callback_info.mrefreshtime}});
+</script>
+
+{{include file="$template_path/footer.html"}}
+
+</body>
+</html>

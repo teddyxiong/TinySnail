@@ -130,6 +130,22 @@ class TaskModel extends BaseModel {
 		}
 	}
 
+	public function addTask($task_info) {
+		$this->db->Insert($task_info, $this->tb_tasks);
+		$id = $this->db->LastInsertID();
+
+		return $id;
+	}
+
+	public function fetchOneTask($id) {
+		$where = array('tid'=>$id);
+		$task_info = $this->db->Select($this->tb_tasks, $where);
+		if ($task_info) {
+			return $task_info;
+		}
+		return null;
+	}
+
 	public function signUp() {
 		//$this->db;
 	}
