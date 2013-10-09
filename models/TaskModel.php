@@ -146,6 +146,18 @@ class TaskModel extends BaseModel {
 		return null;
 	}
 
+	public function fetchAllTask() {
+		$where = array();
+		$order_by = "tid desc";
+		$limit = "0, 10";
+		$tasks = $this->db->Select($this->tb_tasks, $where, $order_by, $limit);
+		if ($tasks) {
+			return $tasks;
+		}
+		return null;
+
+	}
+
 	public function signUp() {
 		//$this->db;
 	}

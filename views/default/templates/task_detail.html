@@ -4,7 +4,13 @@
 
 <!-- well -->
 <div class="well">
-<p> {{$task_info.subject}} </p>
+<h2 class="center">{{$task_info.subject}} </h2>
+时间进度:
+<div class="progress progress-striped active">
+  <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+      <span class="sr-only">75% Complete</span>
+	    </div>
+		</div>
 <p> {{$task_info.description}} </p>
 </div> 
 <!-- /well -->

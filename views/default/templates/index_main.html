@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-8"> <!--span-->
+<div class="col-xs-12 col-sm-9"> <!--span-->
 <div class="panel panel-default">
 <!-- Default panel contents -->
 <div class="panel-heading">任务守则</div>
@@ -13,18 +13,26 @@
 </div>
 
 <!-- tasks list-->
-<ul class="list-group">
-<li class="list-group-item">
-<span class="badge">1</span>
-想问一下各位，你们公司的线上Linux服务器都是无GUI环境的吗？
-<p>111</p>
-</li>
-<li class="list-group-item">
-<span class="badge">12</span>
-为什么Xcode5在默认开启ARC的情况下，通过模版创建工程，默认生成的NSWindow的IBOutlet还是assign的呢？
-</li>
-
-</ul>
+<table class="table table-hover">
+<tbody>
+{{foreach from=$tasks item="task_info"}}
+<tr>
+<td class="col-xs-24 col-sm-1">
+<span class="badge">0</span>
+</td>
+<td class="col-xs-24 col-sm-1"><span class="badge">0</span></td>
+<td class="col-xs-24 col-sm-1"><span class="badge">42</span></td>
+<td class="col-xs-24 col-sm-21">
+<div class="">
+<a href="task_detail/{{$task_info.tid}}">{{$task_info.subject}}。</a>
+</div>
+<div>
+<small class="text-muted">此任务由 <img src="https://0.gravatar.com/avatar/6f81e5cd82f503975d96d8d03a9fead5?d=https%3A%2F%2Fidenticons.github.com%2F73c782b2c4ab03685293d9f042401044.png" class="img-rounded" height="15" width="15"> 于3 分钟前发布       •      最后回复来自 <img src="https://0.gravatar.com/avatar/6f81e5cd82f503975d96d8d03a9fead5?d=https%3A%2F%2Fidenticons.github.com%2F73c782b2c4ab03685293d9f042401044.png" class="img-rounded" height="15" width="15">&nbsp;&nbsp;&nbsp;[ 2013-8-22结束，还剩<strong>30</strong>天 ]</small>
+</div>
+</td>
+</tr>
+{{/foreach}}
+</table>
 
 </div>
 </div> 
