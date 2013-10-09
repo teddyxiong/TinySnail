@@ -12,3 +12,7 @@ rewrite ^/signin/?$ /index.php?controller=sign_in last;
 rewrite ^/signout/?$ /index.php?controller=sign_out last;
 
 rewrite ^/addtask/?$ /index.php?controller=add_task last;
+
+rewrite ^/jump/([a-z-A-Z]+)/([0-9]+)/?$ /index.php?controller=jump&type=$1&callback_id=$2 last;
+
+rewrite ^/task_detail/([0-9]+)/?$ /index.php?controller=task_detail&id=$1 last;
