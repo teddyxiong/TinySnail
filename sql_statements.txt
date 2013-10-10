@@ -32,6 +32,7 @@ CREATE TABLE `bind_users` (
 
 CREATE TABLE `tasks` (
 	`tid` bigint(20) NOT NULL AUTO_INCREMENT,
+	`uid` int(10) NOT NULL DEFAULT '0',
 	`task_cate_id` int(10) NOT NULL DEFAULT '0',
 	`article_id` int(10) NOT NULL DEFAULT '0',
 	`begin_time` int(10) NOT NULL DEFAULT '0',
