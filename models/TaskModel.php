@@ -7,6 +7,8 @@ class TaskModel extends BaseModel {
 	public $errors = array();
 
 	public $tb_tasks = 'tasks';
+	public $tb_users = 'users';
+
 	public $tb_bind_users = 'bind_users';
 
 	public function lastLogin($uid) {
@@ -138,8 +140,9 @@ class TaskModel extends BaseModel {
 	}
 
 	public function fetchOneTask($id) {
-		$where = array('tid'=>$id);
-		$task_info = $this->db->Select($this->tb_tasks, $where);
+		$query = "select t.*, u.user_name,u.uid,u.avatar from {$this->tb_tasks} AS t, {$this->tb_users} AS u";
+		$query .= " where t.tid='$id' and t.uid=u.uid";
+		$task_info = $this->db->ExecuteSQL($query);
 		if ($task_info) {
 			return $task_info;
 		}
@@ -156,6 +159,11 @@ class TaskModel extends BaseModel {
 		}
 		return null;
 
+	}
+
+	public function hits($id) {
+		$query = "update {$this->tb_tasks} set hits=hits+1 where tid='$id'"; 
+		return $this->db->ExecuteSQL($query);
 	}
 
 	public function signUp() {

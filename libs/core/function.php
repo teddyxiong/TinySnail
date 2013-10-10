@@ -181,4 +181,33 @@ function display_error_page($title, $text) {
 	require PATH_ROOT.DS.'error.php';                                           
 	exit;
 }
+
+function fromat_view_date($dateline) {
+	$time = time();
+	$offset = $time - $dateline;
+
+	if (86400*3 < $offset){
+		return date("Y-m-d H:i:s", $dateline);
+	}
+
+	if (86400*3 > $offset && 86400*2 < $offset){
+		return "2天前";
+	}
+
+	if (86400*2 > $offset && 86400 < $offset){
+		return "1天前";
+	}
+
+	if (86400 > $offset && 3600 < $offset){
+		return ceil($offset/3600)."小时前";
+	}
+
+	if (3600 > $offset && 60 < $offset){
+		return ceil($offset/60)."分钟前";
+	}
+
+	if (60 > $offset){
+		return $offset."秒前";
+	}
+}
 ?>

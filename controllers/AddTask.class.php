@@ -31,9 +31,9 @@ class AddTask extends Base{
 				$this->errors[] = '任务的开始时间最早必需是今天；结束时间必需大于开始时间。';
 			}
 
-			if (empty($post['description']) || mb_strlen($post['description']) < 15 || mb_strlen($post['description']) > 3000) {
+			if (empty($post['description']) || mb_strlen($post['description']) < 15 || mb_strlen($post['description']) > 8000) {
 				var_dump($post['description']);
-				$this->errors[] = '任务描述必需大于等于15个汉字；小于等于150个汉字,并且只允许输入汉字、字母和数字和MarkDown的语法。';
+				$this->errors[] = '任务描述必需大于等于15个汉字；小于等于8000个字符,并且只允许输入汉字、字母和数字和MarkDown的语法。';
 			}
 
 			$div_id = p('alert_div_id', false, 'alert_danger');
@@ -42,6 +42,7 @@ class AddTask extends Base{
 			}
 
 			$post['tid'] = NULL;
+			$post['uid'] = User::getUid();
 			$post['article_id'] = 0;
 			$post['point'] = 2;
 			$post['status'] = 1; //进行中，未完成，已完成

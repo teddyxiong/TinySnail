@@ -2,18 +2,66 @@
 
 <div class="container">
 
-<!-- well -->
-<div class="well">
-<h2 class="center">{{$task_info.subject}} </h2>
-时间进度:
-<div class="progress progress-striped active">
-  <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
-      <span class="sr-only">75% Complete</span>
-	    </div>
+<!-- 导航 -->
+<ol class="breadcrumb">
+<li><a href="/home">首页</a></li>
+<li class="active">任务详情</li>
+</ol>
+<hr/>
+<!-- /导航-->
+<div class="row row-offcanvas row-offcanvas-right">
+				<div class="col-xs-12 col-sm-9">
+					<div class="progress progress-striped active">
+{{if $task_info.schedule_txt_local eq 'left'}}
+<strong class="text-muted">&nbsp;{{$task_info.schedule_txt}}</strong>
+{{/if}}
+						<div class="progress-bar progress-bar-info"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"  style="width: {{$task_info.schedule}}%"> </div>
+{{if $task_info.schedule_txt_local eq 'right'}}
+<strong class="text-muted">&nbsp;{{$task_info.schedule_txt}}</strong>
+{{/if}}
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-3">
+				</div>
+				</div>
+<div class="row row-offcanvas row-offcanvas-right">
+	<div class="col-xs-12 col-sm-9"> <!--span-->
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-body">
+				<h3 ><img src="{{$task_info.avatar}}" width="25" height="25" class="img-rounded" ></img><strong>{{$task_info.subject}}</strong></h3>
+				<div class="text-muted">
+				<ul class="list-inline">
+				    <li><a href="">{{$task_info.user_name}}</a> 发表于：{{$task_info.create_time}}<li>
+				    <li>{{$task_info.hits}} 次阅读<li>
+				    <li><a href="">{{$task_info.comments}}</a> 条评论<li>
+				</ul>
+				</div>
+				<hr/>
+				<div style="line-height:28px;letter-spacing:1px;text-indent:40px;"> {{$task_info.description}} </div>
+			</div>
 		</div>
-<p> {{$task_info.description}} </p>
-</div> 
-<!-- /well -->
+		<!--评论-->
+		<textarea class="form-control" rows="3"></textarea>
+		<input type="submit" value="发表评论" name=""/>
+		<span class="help-block">登录后才能进行评论。</span>
+		<!--/评论-->
+	</div>
+
+	<div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">                                 
+		<div class="panel panel-default">
+			<div class="panel-heading">热门任务</div>
+				<ul class="list-group">
+					<li class="list-group-item">
+						Cras justo odio
+					</li>
+					<li class="list-group-item">
+						Cras justo odio
+					</li>
+				</ul>
+			</div>
+		</div><!--/span-->
+	</div> 
 
 {{include file="$template_path/footer.html"}}
 
