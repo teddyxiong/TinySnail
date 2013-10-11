@@ -14,10 +14,10 @@ $("a[id^='rely_comment_']").click(function() {
 	var comment_text = $(this).attr('comment_text');
 	$("#parent_id").val(comment_cid);
 
-	var quote_content = ">"+"#### 引用来自“@"+comment_user_name+"”的评论:     "+comment_text+"<hr/>";
-	var comment_content = "M#D正在引用 @"+comment_user_name+" 的评论M#D\r\n";
+	var quote_content = "#### 引用来自“@"+comment_user_name+"”的评论:     "+comment_text;
+	var comment_content = "M#D正在引用 @"+comment_user_name+" 的评论M#D";
 
-	$("#quote_content").val(quote_content);
+	$("#quote_content").val(comment_text);
 	$("#comment").html(comment_content);
 	location.href = "#comment_input";
 });

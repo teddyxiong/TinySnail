@@ -28,14 +28,24 @@ class TaskDetail extends Base{
 		}
 		foreach($comments as $key=>$val) {
 			$comments[$key]['create_time'] = fromat_view_date($val['create_time']);
+			if (strpos($val['comment'], '[[[SNAIL_MBR]]]') !== false) {
+				$tmp = explode('[[[SNAIL_MBR]]]', $val['comment']);
+				$num = count($tmp);
+				$comment = "";
+				foreach($tmp as $k=>$item) {
+					$comment .= str_repeat(">", ($k+1)).trim($item)."\r\n";
+					$comment .= "     ";
+				}
+				$val['comment'] = $comment;
+			}
 			$comments[$key]['comment'] = Markdown::defaultTransform($val['comment']);
 			$comments[$key]['floor'] = ($key+1)+($page_num-1)*COMMENT_PAGE_OFFSET;
 		}
 
 		 // 评论
-		$post_type = p('post_type', false, '');                                                                   
+		$post_type = p('post_type', true, '');                                                                   
 		if ('task_comment' == $post_type) {
-			$div_id = p('alert_div_id', false, 'alert_danger');
+			$div_id = p('alert_div_id', true, 'alert_danger');
 			$post = [];
 			$post['uid'] = User::getUid();
 
@@ -47,12 +57,17 @@ class TaskDetail extends Base{
 				$this->veiwNotice($error, $div_id);
 			}
 
-			$post['comment'] = p('comment', false, '');
+			$post['comment'] = p('comment', true, '');
 			$pattern = '/M\#D.+M\#D/';
 			if (preg_match($pattern, $post['comment'])) {
 				$temp = preg_replace($pattern, "", $post['comment']);
-				$quote_content = p('quote_content', false, '');
-				$post['comment'] = $quote_content.$temp;	
+				$quote_content = p('quote_content', true, '');
+				//preg_match_all('/@/', $quote_content, $matches);
+				//$quote = str_repeat(">",count($matches[0]));
+				//$n = count($matches[0]);
+				//$post['comment'] = $quote.$quote_content."\n".$temp;	
+				//$post['comment'] = $temp;	
+				$post['comment'] = "{$temp}[[[SNAIL_MBR]]]#### 引用来自“@ghh”的评论:{$quote_content}";
 				unset($temp);
 			}
 
