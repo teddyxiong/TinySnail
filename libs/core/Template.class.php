@@ -20,6 +20,12 @@ class Template extends Smarty {
 		$this->caching = 0;
 		$this->assign('project', 'TinySnail');
 		$this->assign('title', 'TinySnail-任务发生器。');
+
+		$login_user_info = User::getCurrentLoginUser();
+		$login_uid = User::getUid();
+		$this->assign('login_uid', $login_uid);
+		$this->assign('login_user_info', $login_user_info);
+
 		$this->assign('template_path', PATH_VIEWS.DS.'default/templates');
 		$this->assign('bootstrap_domain', DOMAIN.DS.'public/bootstrap-3.0.0-dist');
 		$this->assign('portal_domain', DOMAIN.DS.'public/portal');
