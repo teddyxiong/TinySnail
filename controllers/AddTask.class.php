@@ -56,8 +56,6 @@ class AddTask extends Base{
 			$post['last_ip'] = $ip;
 
 			$task_id = $task_model->addTask($post);
-			var_dump($post);
-			echo $task_id;
 			if (!empty($task_id)) {
 				$url = DOMAIN."/jump/addtask/$task_id";
 				$this->pageJump($url);

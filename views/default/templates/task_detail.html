@@ -39,13 +39,23 @@
 				</div>
 				<hr/>
 				<div style="line-height:28px;letter-spacing:1px;text-indent:40px;"> {{$task_info.description}} </div>
+				<a name="comment_input">.</a>
 			</div>
 		</div>
 		<!--评论-->
 {{if $login_uid>0}}
 		<div style="text-align: right;">
+			<!-- 提示 -->
+			<div class="form-group">
+					<div class="alert alert-danger" style="display:none" id="alert_danger"> <strong>标题输入不合法...</strong> </div>
+			</div>
+			<!-- /提示 -->
 			<form class="form-horizontal" role="form" action="" method="post" target="inner_post_iframe">
-				<textarea class="form-control" rows="3"></textarea>
+				<input type="hidden" name="post_type" value="task_comment" />
+				<input type="hidden" name="alert_div_id" value="alert_danger" />
+				<input type="hidden" name="parent_id" value="0" />
+				<input type="hidden" id="quote_content" name="quote_content" value="" />
+				<textarea class="form-control" rows="3" name="comment" id="comment"></textarea>
 				<br/>
 				<h5>
 					<small>评论仍然可以使用<a href="http://en.wikipedia.org/wiki/Markdown" target="_blank">MarkDown</a>语法哟。</small>
@@ -56,8 +66,26 @@
 {{else}}
 		<span class="help-block"><a href="/signin">登录</a>后才能进行评论。</span>
 {{/if}}
+		<a name="comment">评论列表</a>
 		<hr/>
 		<!--/评论-->
+{{foreach from=$comments item="item"}}
+		<div class="row row-offcanvas row-offcanvas-right">
+			<div class="col-xs-12 col-sm-1"> 
+				<a href=""><img src="{{$item.avatar}}" width="40" height="40" class="img-rounded"/></a>
+			</div>
+			<div class="col-xs-12 col-sm-11"> 
+				<h5> <small>#{{$item.floor}}&nbsp;&nbsp;{{$item.user_name}}&nbsp;发表于：{{$item.create_time}}</small></h5>
+				<p>
+					{{$item.comment}}
+				</p>
+				<div style="text-align: right;"><a href="javascript:void(0);" id="rely_comment_{{$item.cid}}" comment_cid="{{$item.cid}}" comment_user_name="{{$item.user_name}}" comment_text="{{$item.comment}}">回复此评论</a></div>
+			</div>
+		</div> 
+		<hr/>
+{{foreachelse}}
+没有评论!!!
+{{/foreach}}
 	</div>
 
 	<div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">                                 

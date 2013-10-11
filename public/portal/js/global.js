@@ -7,6 +7,20 @@ $("span#signout").click(function(){
 	location.href = "/signout";
 });
 
+// reply comment
+$("a[id^='rely_comment_']").click(function() {
+	var comment_cid = $(this).attr('comment_cid');
+	var comment_user_name = $(this).attr('comment_user_name');
+	var comment_text = $(this).attr('comment_text');
+	$("#parent_id").val(comment_cid);
+
+	var quote_content = ">"+"#### 引用来自“@"+comment_user_name+"”的评论:     "+comment_text+"<hr/>";
+	var comment_content = "M#D正在引用 @"+comment_user_name+" 的评论M#D\r\n";
+
+	$("#quote_content").val(quote_content);
+	$("#comment").html(comment_content);
+	location.href = "#comment_input";
+});
 // entry the task 
 $("button#add_task").click(function(){
 	location.href = "/addtask";
