@@ -42,9 +42,21 @@
 			</div>
 		</div>
 		<!--评论-->
-		<textarea class="form-control" rows="3"></textarea>
-		<input type="submit" value="发表评论" name=""/>
-		<span class="help-block">登录后才能进行评论。</span>
+{{if $login_uid>0}}
+		<div style="text-align: right;">
+			<form class="form-horizontal" role="form" action="" method="post" target="inner_post_iframe">
+				<textarea class="form-control" rows="3"></textarea>
+				<br/>
+				<h5>
+					<small>评论仍然可以使用<a href="http://en.wikipedia.org/wiki/Markdown" target="_blank">MarkDown</a>语法哟。</small>
+					<button type="submit" class="btn btn-primary">发表评论</button>
+				</h5>
+			</form>
+		</div>
+{{else}}
+		<span class="help-block"><a href="/signin">登录</a>后才能进行评论。</span>
+{{/if}}
+		<hr/>
 		<!--/评论-->
 	</div>
 
@@ -64,6 +76,6 @@
 	</div> 
 
 {{include file="$template_path/footer.html"}}
-
+<iframe name="inner_post_iframe" style="display:block;width:98%;height:300px;"></iframe>
 </body>
 </html>
