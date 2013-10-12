@@ -210,4 +210,52 @@ function fromat_view_date($dateline) {
 		return $offset."秒前";
 	}
 }
+
+/**
+ * 生成分页的字符串,页码的url参数如下： &p=1,2,3
+ *
+ * @param int $total_rows 总记录数
+ * @param int $currentpage	当前第几页
+ * @param int $page_size	每页几条
+ * @param int $page_numbers 页码数 10个数字or 20个数字
+ * @return  a string of pages.	
+ */
+function pages_info($total_rows, $current_page, $page_size=10)
+{
+	//total pages
+	if($total_rows <= $page_size)
+	{
+		return '';
+	}
+	$pages = intval($total_rows / $page_size);
+	if($total_rows % $page_size > 0)
+	{
+		$pages ++;
+	}
+
+	$prev_page = $current_page-1;
+	if ($prev_page < 1) {                                                                         
+		$str .= "<li class='disabled'><a href=\"javascript:void(0);\">&laquo;</a></li>";
+	} else {
+		$str .= "<li><a href='?p={$prev_page}'>&laquo;</a></li>";
+	}
+
+	for($i=1; $i<=$pages; $i++) {
+		if ($i == $current_page) {
+			$active = "active";
+		} else {
+			$active = "";
+		}
+		$str .= "<li class='$active'><a href='?p={$i}'>$i</a></li>";
+	}
+
+	$next_page = $current_page+1;
+	if ($next_page > $pages) {
+		$str .= "<li class='disabled'><a href='javascript:void(0);'>&raquo;</a></li>";
+	} else {
+		$str .= "<li><a href='?p={$next_page}'>&raquo;</a></li>";
+	}
+
+	return '<ul class="pagination">'.$str.'</ul>';
+}
 ?>

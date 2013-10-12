@@ -16,6 +16,9 @@ class TaskDetail extends Base{
 		$total_page = $comment_model->getTotalNumberByTid($id);
 		// 当前页的评论
 		$page_num = g("p", false, 1);
+
+		$page = pages_info($total_page['total'], $page_num, COMMENT_PAGE_OFFSET);
+
 		$comments = $comment_model->getAllCommentByTid($id, $page_num, COMMENT_PAGE_OFFSET);
 		if (empty($comments)) {
 			$comments = [];
@@ -38,6 +41,11 @@ class TaskDetail extends Base{
 
 		// 取得评论数据
 		$replys = $comment_model->getAllReplyByCid($comment_ids);
+		if (!empty($replys['rid'])) {
+			$tmp = $replys;
+			$replys = [];
+			$replys[] = $tmp;
+		}
 		$reply_list = [];
 		foreach($replys as $reply_info) {
 			$reply_info['create_time'] = fromat_view_date($reply_info['create_time']);
@@ -146,6 +154,7 @@ class TaskDetail extends Base{
 		$this->tpl->assign('all_cate',$all_cate);
 		$this->tpl->assign('comments',$comments);
 		$this->tpl->assign('reply_list',$reply_list);
+		$this->tpl->assign('page',$page);
 
 		$this->tpl->display('task_detail.html');
 	}
