@@ -1,0 +1,76 @@
+{{include file="$template_path/header.html"}}
+
+<div class="container">
+
+<!-- 导航 -->
+<ol class="breadcrumb">                                                                                           
+<li><a href="/home">首页</a></li>
+<li class="active">用户详情</li>
+</ol>
+<hr/>
+<!-- /导航-->
+
+<!--row-->
+<div class="row row-offcanvas row-offcanvas-right">
+<div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">                                 
+<img src="{{$user_info.avatar}}&s=440" class="img-rounded" height="220" width="220">
+<h3>{{$user_info.user_name}}</h3>
+<h5>{{$user_info.login_name}}</h5>
+<hr/>
+<h5><strong>博客：</strong><small>{{$user_info.extend.blog}}</small></h5>
+<h5><strong>邮箱：</strong><small>{{$user_info.user_email}}</small></h5>
+<h5><strong>就职公司：</strong><small>{{$user_info.extend.company}}</small></h5>
+<h5><strong>所在地区：</strong><small>{{$user_info.extend.location}}</small></h5>
+<h5><strong>注册时间：</strong><small>{{$user_info.user_registration_timeline}}</small></h5>
+<h5><strong>他的项目：</strong><small><a href="http://github.com/{{$user_info.login_name}}" target="_blank">他的项目</a></small></h5>
+</div><!--/span-->
+
+<div class="col-xs-12 col-sm-9"> <!--span-->
+<div class="panel panel-default">
+<!-- Default panel contents -->
+<div class="panel-heading">任务守则</div>
+<div class="panel-body">
+<!-- tasks list-->
+<table class="table table-hover">
+<tbody>
+{{foreach from=$tasks item="task_info"}}
+<tr>
+<td class="col-xs-24 col-sm-1">
+<span class="badge">0</span>
+</td>
+<td class="col-xs-24 col-sm-1"><span class="badge">0</span></td>
+<td class="col-xs-24 col-sm-1"><span class="badge">42</span></td>
+<td class="col-xs-24 col-sm-21">
+<div class="">
+<a href="task_detail/{{$task_info.tid}}/">{{$task_info.subject}}。</a>
+</div>
+<div>
+<small class="text-muted">此任务由 <img src="https://0.gravatar.com/avatar/6f81e5cd82f503975d96d8d03a9fead5?      
+d=https%3A%2F%2Fidenticons.github.com%2F73c782b2c4ab03685293d9f042401044.png" class="img-rounded" height="15"     
+width="15"> 于3 分钟前发布       •      最后回复来自 <img src="https://0.gravatar.com/avatar/                     
+6f81e5cd82f503975d96d8d03a9fead5?d=https%3A%2F%2Fidenticons.github.com%2F73c782b2c4ab03685293d9f042401044.png"    
+class="img-rounded" height="15" width="15">&nbsp;&nbsp;&nbsp;[ 2013-8-22结束，还剩<strong>30</strong>天 ]</small>
+</div>
+</td>
+</tr>
+{{/foreach}}
+</table>
+
+</div>
+</div> 
+</div> 
+</div>
+<!-- /row -->
+
+<!-- well -->
+<div class="well">
+<p>
+生命本没有意义，你要能给它什么意义，他就有什么意义。与其终日冥想人生有何意义，不如试用此生做点有意义的事。
+</p>
+</div> 
+<!-- /well -->
+
+{{include file="$template_path/footer.html"}}
+
+</body>
+</html>

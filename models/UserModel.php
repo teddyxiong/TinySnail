@@ -130,6 +130,16 @@ class UserModel extends BaseModel {
 		}
 	}
 
+	public function getUserByName($user_name) {
+		$query = "select * from {$this->tb_users} u, {$this->tb_bind_users} b";
+		$query.= " where u.user_name='{$user_name}' and u.binduid=b.binduid";
+		$user_info = $this->db->ExecuteSQL($query);
+		if ($user_info) {
+			return $user_info;
+		}
+		return null; 
+	}
+
 	public function signUp() {
 		//$this->db;
 	}

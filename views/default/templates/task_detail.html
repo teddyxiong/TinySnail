@@ -77,9 +77,9 @@
 			</div>
 			<div class="col-xs-12 col-sm-11"> 
 				<h5> <small>#{{$item.floor}}&nbsp;&nbsp;{{$item.user_name}}&nbsp;发表于：{{$item.create_time}}</small></h5>
-				<p>
+				<div style="word-break:break-all;">
 					{{$item.comment}}
-				</p>
+				</div>
 				<div style="text-align: right;">
 					<a href="javascript:void(0);" id="reply_comment_button_{{$item.cid}}" comment_cid="{{$item.cid}}">回复此评论</a>
 				</div>

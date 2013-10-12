@@ -17,7 +17,7 @@ class TaskDetail extends Base{
 		// 当前页的评论
 		$page_num = g("p", false, 1);
 		if ($page_num < 1) $page_num = 1;
-		$pages = ceil($total_page/COMMENT_PAGE_OFFSET);
+		$pages = ceil(($total_page['total']/COMMENT_PAGE_OFFSET));
 		if ($page_num > $pages) $page_num = $pages;
 
 		$page = pages_info($total_page['total'], $page_num, COMMENT_PAGE_OFFSET);
@@ -57,7 +57,7 @@ class TaskDetail extends Base{
 		}
 
 		 // 评论
-		$post_type = p('post_type', true, '');                                                                   
+		$post_type = p('post_type', true,'');
 		if ('task_comment' == $post_type) {
 			$div_id = p('alert_div_id', true, 'alert_danger');
 			$post = [];
@@ -85,6 +85,7 @@ class TaskDetail extends Base{
 
 			$comment_id = $comment_model->addComment($post);
 			if (!empty($comment_id)) { 
+				$task_model->comments($id); // 评论数加1
 				$mem_obj->set($mem_key, $comment_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
 				$url = DOMAIN."/jump/taskcomment/$id";
 				$this->pageJump($url);
@@ -117,6 +118,7 @@ class TaskDetail extends Base{
 
 			$reply_id = $comment_model->addReply($post);
 			if (!empty($reply_id)) { 
+				$task_model->comments($id); // 评论数加1
 				$mem_obj->set($mem_key, $reply_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
 				$url = DOMAIN."/jump/taskcomment/$id";
 				$this->pageJump($url);
@@ -129,6 +131,7 @@ class TaskDetail extends Base{
 
 		$task_info = $task_model->fetchOneTask($id);
 
+		//点击数加1
 		$task_model->hits($task_info['tid']);
 
 		$task_info['description'] = Markdown::defaultTransform($task_info['description']);

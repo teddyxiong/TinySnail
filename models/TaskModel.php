@@ -166,6 +166,11 @@ class TaskModel extends BaseModel {
 		return $this->db->ExecuteSQL($query);
 	}
 
+	public function comments($id) {
+		$query = "update {$this->tb_tasks} set comments=comments+1 where tid='$id'"; 
+		return $this->db->ExecuteSQL($query);
+	}
+
 	public function signUp() {
 		//$this->db;
 	}
