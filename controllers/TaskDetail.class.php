@@ -12,10 +12,13 @@ class TaskDetail extends Base{
 		$comment_model = new CommentModel();
 		$task_cate_model = new TaskCateModel();
 
-		// 评论的总页数
+		// 评论的总数
 		$total_page = $comment_model->getTotalNumberByTid($id);
 		// 当前页的评论
 		$page_num = g("p", false, 1);
+		if ($page_num < 1) $page_num = 1;
+		$pages = ceil($total_page/COMMENT_PAGE_OFFSET);
+		if ($page_num > $pages) $page_num = $pages;
 
 		$page = pages_info($total_page['total'], $page_num, COMMENT_PAGE_OFFSET);
 
