@@ -73,7 +73,6 @@ CREATE TABLE `task_comments` (
 	`cid` bigint(20) NOT NULL AUTO_INCREMENT,
 	`tid` bigint(20) NOT NULL,
 	`uid` bigint(20) NOT NULL,
-	`parent_id` bigint(20) NOT NULL,
 	`create_time` int(11) NOT NULL DEFAULT '0',
 	`create_ip` varchar(20) NOT NULL DEFAULT '0',
 	`comment` text DEFAULT '',
@@ -81,6 +80,21 @@ CREATE TABLE `task_comments` (
 	PRIMARY KEY (`cid`),
 	KEY `uid` (`uid`),
 	KEY `tid` (`tid`)
+)ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `task_comments_reply` (
+	`rid` bigint(20) NOT NULL AUTO_INCREMENT,
+	`cid` bigint(20) NOT NULL,
+	`uid` bigint(20) NOT NULL,
+	`reply_uid` bigint(20) NOT NULL,
+	`reply_username` varchar(64) NOT NULL,
+	`create_time` int(11) NOT NULL DEFAULT '0',
+	`create_ip` varchar(20) NOT NULL DEFAULT '0',
+	`reply` text DEFAULT '',
+	`status` tinyint(3) NOT NULL DEFAULT '0' comment '0-正常-1-已删除',
+	PRIMARY KEY (`rid`),
+	KEY `uid` (`uid`),
+	KEY `cid` (`cid`)
 )ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `task_article` (

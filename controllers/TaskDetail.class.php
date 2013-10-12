@@ -26,20 +26,23 @@ class TaskDetail extends Base{
 			$comments[] = $tmp;
 			unset($tmp);
 		}
+
+		$comment_ids = array();
+
 		foreach($comments as $key=>$val) {
 			$comments[$key]['create_time'] = fromat_view_date($val['create_time']);
-			if (strpos($val['comment'], '[[[SNAIL_MBR]]]') !== false) {
-				$tmp = explode('[[[SNAIL_MBR]]]', $val['comment']);
-				$num = count($tmp);
-				$comment = "";
-				foreach($tmp as $k=>$item) {
-					$comment .= str_repeat(">", ($k+1)).trim($item)."\r\n";
-					$comment .= "     ";
-				}
-				$val['comment'] = $comment;
-			}
 			$comments[$key]['comment'] = Markdown::defaultTransform($val['comment']);
 			$comments[$key]['floor'] = ($key+1)+($page_num-1)*COMMENT_PAGE_OFFSET;
+			$comment_ids[] = $val['cid'];
+		}
+
+		// 取得评论数据
+		$replys = $comment_model->getAllReplyByCid($comment_ids);
+		$reply_list = [];
+		foreach($replys as $reply_info) {
+			$reply_info['create_time'] = fromat_view_date($reply_info['create_time']);
+			$reply_info['reply'] = Markdown::defaultTransform($reply_info['reply']);
+			$reply_list[$reply_info['cid']][] = $reply_info;
 		}
 
 		 // 评论
@@ -58,22 +61,8 @@ class TaskDetail extends Base{
 			}
 
 			$post['comment'] = p('comment', true, '');
-			$pattern = '/M\#D.+M\#D/';
-			if (preg_match($pattern, $post['comment'])) {
-				$temp = preg_replace($pattern, "", $post['comment']);
-				$quote_content = p('quote_content', true, '');
-				//preg_match_all('/@/', $quote_content, $matches);
-				//$quote = str_repeat(">",count($matches[0]));
-				//$n = count($matches[0]);
-				//$post['comment'] = $quote.$quote_content."\n".$temp;	
-				//$post['comment'] = $temp;	
-				$post['comment'] = "{$temp}[[[SNAIL_MBR]]]#### 引用来自“@ghh”的评论:{$quote_content}";
-				unset($temp);
-			}
-
 			$post['cid'] = NULL;
 			$post['tid'] = $id;
-			$post['parent_id'] = p('parent_id', false, 0);
 			$post['create_time'] = time();
 			$post['create_ip'] = get_client_ip();
 			$post['status'] = COMMENT_NORMAL;
@@ -90,6 +79,39 @@ class TaskDetail extends Base{
 				$this->pageJump($url);
 			}
 			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
+		} else if ('reply' == $post_type) {
+			$div_id = p('alert_div_id', true, 'alert_danger');
+			$post = [];
+			$post['uid'] = User::getUid();
+
+			$mem_key = "last_comment_user_{$post['uid']}";
+			$last_comment_id = $mem_obj->get($mem_key);
+			if (!empty($last_comment_id)) {
+				$error = "对不起，5分钟内您只能发表一次评论。";                                               
+				$this->veiwNotice($error, $div_id);
+			}
+
+			$post['reply'] = p('comment', true, '');
+			$post['cid'] = p('comment_id', true, '');
+			$post['reply_uid'] = p('reply_uid', true, '');
+			$post['reply_username'] = p('reply_username', true, '');
+			$post['create_time'] = time();
+			$post['create_ip'] = get_client_ip();
+			$post['status'] = COMMENT_NORMAL;
+
+			if (empty($post['reply']) || mb_strlen($post['reply']) < 3 || mb_strlen($post['reply']) > 1000) {
+				$error = "评论内容必需大于3个字符小于500个字符。";
+				$this->veiwNotice($error, $div_id);
+			}
+
+			$reply_id = $comment_model->addReply($post);
+			if (!empty($reply_id)) { 
+				$mem_obj->set($mem_key, $reply_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
+				$url = DOMAIN."/jump/taskcomment/$id";
+				$this->pageJump($url);
+			}
+			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
+
 		}
 
 		$all_cate = $task_cate_model->allCate();
@@ -123,6 +145,7 @@ class TaskDetail extends Base{
 		$this->tpl->assign('task_info',$task_info);
 		$this->tpl->assign('all_cate',$all_cate);
 		$this->tpl->assign('comments',$comments);
+		$this->tpl->assign('reply_list',$reply_list);
 
 		$this->tpl->display('task_detail.html');
 	}

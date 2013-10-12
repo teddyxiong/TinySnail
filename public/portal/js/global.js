@@ -7,20 +7,79 @@ $("span#signout").click(function(){
 	location.href = "/signout";
 });
 
-// reply comment
-$("a[id^='rely_comment_']").click(function() {
-	var comment_cid = $(this).attr('comment_cid');
-	var comment_user_name = $(this).attr('comment_user_name');
-	var comment_text = $(this).attr('comment_text');
-	$("#parent_id").val(comment_cid);
+// reply comment submit
+$("button[id^='reply_submit_']").click(function(){
+	// fetch data
+	var comment_id = $(this).attr("comment_id");
+	var post_type = 'reply';
+	var reply_uid = $(this).attr("reply_uid");
+	var reply_username = $(this).attr("reply_username");
+	var reply = $("#reply_comment_"+comment_id).val();
 
-	var quote_content = "#### 引用来自“@"+comment_user_name+"”的评论:     "+comment_text;
-	var comment_content = "M#D正在引用 @"+comment_user_name+" 的评论M#D";
+	// set data 
+	$("input[name='post_type']").val(post_type);
+	$("input[name='reply_uid']").val(reply_uid);
+	$("input[name='reply_username']").val(reply_username);
+	$("input[name='comment_id']").val(comment_id);
+	$("input[name='alert_div_id']").val("alert_danger_"+comment_id);
+	$("#comment").val(reply);
 
-	$("#quote_content").val(comment_text);
-	$("#comment").html(comment_content);
-	location.href = "#comment_input";
+	// submit data
+	document.comment_form.submit();
+
 });
+
+// reply reply submit
+$("button[id^='reply_reply_submit_']").click(function(){
+	// fetch data
+	var reply_id = $(this).attr("reply_id");
+	var comment_id = $(this).attr("comment_id");
+	var post_type = 'reply';
+	var reply_uid = $(this).attr("reply_uid");
+	var reply_username = $(this).attr("reply_username");
+	var reply = $("#reply_reply_"+reply_id).val();
+
+	// set data 
+	$("input[name='post_type']").val(post_type);
+	$("input[name='reply_uid']").val(reply_uid);
+	$("input[name='reply_username']").val(reply_username);
+	$("input[name='comment_id']").val(comment_id);
+	$("input[name='alert_div_id']").val("reply_alert_danger_"+reply_id);
+	$("#comment").val(reply);
+
+	// submit data
+	document.comment_form.submit();
+
+});
+
+// reply comment set
+$("a[id^='reply_comment_button_']").click(function() {
+	var comment_cid = $(this).attr('comment_cid');
+
+	var reply_div_id = "#reply_div_"+comment_cid;
+	var reply_status = $(reply_div_id).css('display');
+	if ('none' == reply_status) {
+		$(reply_div_id).show();
+	} else {
+		$(reply_div_id).hide();
+	}
+
+});
+
+// reply reply set
+$("a[id^='reply_reply_button_']").click(function() {
+	var rid = $(this).attr('reply_id');
+
+	var reply_reply_div_id = "#reply_reply_div_"+rid;
+	var reply_reply_status = $(reply_reply_div_id).css('display');
+	if ('none' == reply_reply_status) {
+		$(reply_reply_div_id).show();
+	} else {
+		$(reply_reply_div_id).hide();
+	}
+
+});
+
 // entry the task 
 $("button#add_task").click(function(){
 	location.href = "/addtask";
