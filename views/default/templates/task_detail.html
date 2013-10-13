@@ -29,12 +29,12 @@
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-body">
-				<h3 ><img src="{{$task_info.avatar}}" width="25" height="25" class="img-rounded" ></img><strong>{{$task_info.subject}}</strong></h3>
+				<h3 ><a href="/u/{{$task_info.user_name}}" target="_blank"><img src="{{$task_info.avatar}}" width="25" height="25" class="img-rounded" ></img><strong>{{$task_info.subject}}</strong></h3>
 				<div class="text-muted">
 				<ul class="list-inline">
-				    <li><a href="">{{$task_info.user_name}}</a> 发表于：{{$task_info.create_time}}<li>
+				    <li><a href="/u/{{$task_info.user_name}}" target="_blank">{{$task_info.user_name}}</a> 发表于：{{$task_info.create_time}}<li>
 				    <li>{{$task_info.hits}} 次阅读<li>
-				    <li><a href="">{{$task_info.comments}}</a> 条评论<li>
+				    <li><a href="#comment_input">{{$task_info.comments}}</a> 条评论<li>
 				</ul>
 				</div>
 				<hr/>
@@ -73,10 +73,10 @@
 {{foreach from=$comments item="item"}}
 		<div class="row row-offcanvas row-offcanvas-right">
 			<div class="col-xs-12 col-sm-1"> 
-				<a href=""><img src="{{$item.avatar}}" width="40" height="40" class="img-rounded"/></a>
+				<a href="/u/{{$item.user_name}}" target="_blank"><img src="{{$item.avatar}}" width="40" height="40" class="img-rounded"/></a>
 			</div>
 			<div class="col-xs-12 col-sm-11"> 
-				<h5> <small>#{{$item.floor}}&nbsp;&nbsp;{{$item.user_name}}&nbsp;发表于：{{$item.create_time}}</small></h5>
+				<h5> <small>#{{$item.floor}}&nbsp;&nbsp;<a href="/u/{{$item.user_name}}" target="_blank">{{$item.user_name}}</a>&nbsp;发表于：{{$item.create_time}}</small></h5>
 				<div style="word-break:break-all;">
 					{{$item.comment}}
 				</div>
@@ -105,15 +105,15 @@
 				<hr/>
 				<div class="row row-offcanvas row-offcanvas-right">
 					<div class="col-xs-12 col-sm-1"> 
-						<a href=""><img src="{{$reply_info.avatar}}" width="30" height="30" class="img-rounded"/></a>
+						<a href="/u/{{$reply_info.user_name}}" target="_blank"><img src="{{$reply_info.avatar}}" width="30" height="30" class="img-rounded"/></a>
 					</div>
 					<div class="col-xs-12 col-sm-11"> 
 						<h5><small>
-							{{$reply_info.user_name}}&nbsp;发表于：{{$reply_info.create_time}}
+							<a href="/u/{{$reply_info.user_name}}" target="_blank">{{$reply_info.user_name}}</a>&nbsp;发表于：{{$reply_info.create_time}}
 						</small></h5>
-						<p>
+						<div style="word-break:break-all;">
 							回复@<a href="?{{$reply_info.reply_uid}}">{{$reply_info.reply_username}}</a>：{{$reply_info.reply}}
-						</p> 
+						</div> 
 						<div style="text-align: right;">
 							<a href="javascript:void(0);" id="reply_reply_button_{{$reply_info.rid}}" reply_id="{{$reply_info.rid}}" >回复此评论</a>
 						</div>
@@ -128,8 +128,7 @@
 
 						<!--表单-->
 						<div style="text-align:right;display:none" id="reply_reply_div_{{$reply_info.rid}}"> 
-							<textarea class="form-control" rows="3" id="reply_reply_{{$reply_info.rid}}">
-							</textarea>
+							<textarea class="form-control" rows="3" id="reply_reply_{{$reply_info.rid}}"></textarea>
 							<p></p>
 							<button type="button" class="btn btn-info" id="reply_reply_submit_{{$reply_info.rid}}" reply_id="{{$reply_info.rid}}" comment_id="{{$item.cid}}" reply_uid="{{$reply_info.uid}}" reply_username="{{$reply_info.user_name}}">回复评论</button>
 						</div>
