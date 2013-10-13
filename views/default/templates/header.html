@@ -43,12 +43,12 @@
 			<li><a href="#">精品任务</a></li>
 			<li><a href="#">帮助中心</a></li>
 			{{if $userinfo.user_name}}
-			<li><a href="javascript:void(0);"><img src='{{$userinfo.avatar|escape:"htmlall"}}' class="img-rounded" height="20" width="20"/>
-			{{$userinfo.user_name}}
+			<li><a href="/u/{{$userinfo.user_name}}/"><img src='{{$userinfo.avatar|escape:"htmlall"}}' class="img-rounded" height="20" width="20"/>
+			<small id="header_user_name" login_user_name="{{$userinfo.user_name}}">{{$userinfo.user_name}}</small>
 			&nbsp;
-			  <span class="glyphicon glyphicon-plus-sign" id="create" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="添加任务"></span> 
+			  <span class="glyphicon glyphicon-plus-sign" id="create_task" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="添加任务"></span> 
 			&nbsp;
-			  <span class="glyphicon glyphicon-cog" id="setting" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="偏好设置"></span> 
+			  <span class="glyphicon glyphicon-cog" id="setting" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="偏好设置" login_user_name="{{$login_user_info.user_name}}"></span> 
 			&nbsp;
 			  <span class="glyphicon glyphicon-log-out" id="signout" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="退出"></span> 
 			</a></li>

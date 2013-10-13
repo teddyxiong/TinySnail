@@ -85,10 +85,20 @@ $("button#add_task").click(function(){
 	location.href = "/addtask";
 });
 
+// create task
+$("#create_task").click(function(){
+	location.href = "/addtask";
+});
+// settings
+$("#setting").click(function(){
+	var login_user_name = $(this).attr("login_user_name");
+	location.href = "/u/"+login_user_name+"/?tab=settings";
+});
+
 $('#setting').tooltip('show')
 $('#setting').tooltip('hide')
-$('#create').tooltip('show');
-$('#create').tooltip('hide');
+$('#create_task').tooltip('show');
+$('#create_task').tooltip('hide');
 $('#signout').tooltip('show');
 $('#signout').tooltip('hide');
 
