@@ -22,7 +22,7 @@
 <h5><strong>就职公司：</strong><small>{{$user_info.extend.company}}</small></h5>
 <h5><strong>所在地区：</strong><small>{{$user_info.extend.location}}</small></h5>
 <h5><strong>注册时间：</strong><small>{{$user_info.user_registration_timeline}}</small></h5>
-<h5><strong>他的项目：</strong><small><a href="http://github.com/{{$user_info.login_name}}" target="_blank">他的项目</a></small></h5>
+<h5><strong>{{if $user_info.uid eq $login_uid}}我的项目{{else}}Ta的项目{{/if}}：</strong><small><a href="http://github.com/{{$user_info.login_name}}" target="_blank">GitHub repositories</a></small></h5>
 </div><!--/span-->
 
 <div class="col-xs-12 col-sm-9"> <!--span-->
