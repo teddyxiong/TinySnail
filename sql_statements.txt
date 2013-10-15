@@ -49,10 +49,13 @@ CREATE TABLE `tasks` (
 	`create_ip` varchar(20) NOT NULL DEFAULT '0',
 	`last_time` int(11) NOT NULL DEFAULT '0',
 	`last_ip` varchar(20) NOT NULL DEFAULT '0',
+	`comment_last_time` int(11) not null,
+	`comment`_last_user_name varchar(64) not null,
 	PRIMARY KEY (`tid`),
 	KEY `last_time` (`last_time`),
 	KEY `status` (`status`),
-	KEY `task_cate_id` (`task_cate_id`)
+	KEY `task_cate_id` (`task_cate_id`),
+	KEY `comment_last_time` (`comment_last_time`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `task_votes` (

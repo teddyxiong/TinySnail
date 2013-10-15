@@ -53,9 +53,9 @@ class CommentModel extends BaseModel {
 
 	public function getTotalNumberByTid($tid) {
 		$query = "select count(cid) total from {$this->tb_comment} where tid='$tid'";
-		$total = $this->db->ExecuteSQL($query);
-		if ($total) {
-			return $total;
+		$ret = $this->db->ExecuteSQL($query);
+		if ($ret['total']) {
+			return $ret['total'];
 		}
 		return null;
 

@@ -258,4 +258,8 @@ function pages_info($total_rows, $current_page, $page_size=10)
 
 	return '<ul class="pagination">'.$str.'</ul>';
 }
+
+function month_days($year, $month) {
+	return date("t", mktime(0, 0, 0, $month, 1, $year));
+}
 ?>

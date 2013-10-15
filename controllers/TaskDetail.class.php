@@ -12,15 +12,18 @@ class TaskDetail extends Base{
 		$comment_model = new CommentModel();
 		$task_cate_model = new TaskCateModel();
 
+		$login_user_info = User::getCurrentLoginUser();
+
 		// 评论的总数
-		$total_page = $comment_model->getTotalNumberByTid($id);
+		$comment_total= $comment_model->getTotalNumberByTid($id);
+
 		// 当前页的评论
 		$page_num = g("p", false, 1);
 		if ($page_num < 1) $page_num = 1;
-		$pages = ceil(($total_page['total']/COMMENT_PAGE_OFFSET));
+		$pages = ceil(($comment_total/COMMENT_PAGE_OFFSET));
 		if ($page_num > $pages) $page_num = $pages;
 
-		$page = pages_info($total_page['total'], $page_num, COMMENT_PAGE_OFFSET);
+		$page = pages_info($comment_total, $page_num, COMMENT_PAGE_OFFSET);
 
 		$comments = $comment_model->getAllCommentByTid($id, $page_num, COMMENT_PAGE_OFFSET);
 		if (empty($comments)) {
@@ -86,6 +89,7 @@ class TaskDetail extends Base{
 			$comment_id = $comment_model->addComment($post);
 			if (!empty($comment_id)) { 
 				$task_model->comments($id); // 评论数加1
+				$task_model->modifyLastComment($id, $login_user_info['user_name']); // 最后评论时间
 				$mem_obj->set($mem_key, $comment_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
 				$url = DOMAIN."/jump/taskcomment/$id";
 				$this->pageJump($url);
@@ -119,6 +123,7 @@ class TaskDetail extends Base{
 			$reply_id = $comment_model->addReply($post);
 			if (!empty($reply_id)) { 
 				$task_model->comments($id); // 评论数加1
+				$task_model->modifyLastComment($id, $login_user_info['user_name']); // 最后评论时间
 				$mem_obj->set($mem_key, $reply_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
 				$url = DOMAIN."/jump/taskcomment/$id";
 				$this->pageJump($url);

@@ -17,6 +17,8 @@ class AddTask extends Base{
 			$post['finish_time'] = p('finish_time', false, '');
 			$post['task_cate_id'] = p('task_cate_id', false, '');
 			$post['description'] = p('description', false, '');
+			$post['status'] = TASK_STATUS_ONGOING;
+			$post['comment_last_time'] = time();
 			$now = time();
 			$ip = get_client_ip();
 			$begin_for_today = mktime(0,0,0,date("m"),date("d"),date("Y"));

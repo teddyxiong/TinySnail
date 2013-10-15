@@ -149,20 +149,34 @@ class TaskModel extends BaseModel {
 		return null;
 	}
 
-	public function fetchAllTask() {
-		$where = array();
-		$order_by = "tid desc";
-		$limit = "0, 10";
-		$tasks = $this->db->Select($this->tb_tasks, $where, $order_by, $limit);
-		if ($tasks) {
-			return $tasks;
+	public function fetchAllTask($page_num, $offset=20) {
+		$start = ($page_num-1)*$offset;
+		$query = "select t.*, u.user_name, u.avatar from {$this->tb_tasks} AS t, {$this->tb_users} AS u";
+		$query .= " where t.uid=u.uid order by t.comment_last_time DESC LIMIT $start, $offset";
+		$task_list = $this->db->ExecuteSQL($query);                                                               
+		if ($task_list) {
+			return $task_list;
 		}
-		return null;
+	}
 
+	public function fetchTotal() {	
+		$query = "select count(tid) total from {$this->tb_tasks} ";
+		$ret = $this->db->ExecuteSQL($query);                                                               
+		if ($ret['total']) {
+			return $ret['total'];
+		}
+
+		return null;
 	}
 
 	public function hits($id) {
 		$query = "update {$this->tb_tasks} set hits=hits+1 where tid='$id'"; 
+		return $this->db->ExecuteSQL($query);
+	}
+
+	public function modifyLastComment($id, $user_name) {
+		$t = time();
+		$query = "update {$this->tb_tasks} set comment_last_time='$t', comment_last_user_name='$user_name' where tid='$id'"; 
 		return $this->db->ExecuteSQL($query);
 	}
 
