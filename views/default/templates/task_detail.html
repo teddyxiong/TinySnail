@@ -9,6 +9,10 @@
 </ol>
 <hr/>
 <!-- /导航-->
+
+{{if $article_info}}
+<p><h3>当前任务对应的文章是：<a href="/article_detail/{{$article_info.aid}}/">{{$article_info.subject}}</a></h3></p>
+{{/if}}
 <div class="row row-offcanvas row-offcanvas-right">
 				<div class="col-xs-12 col-sm-9">
 					<div class="progress progress-striped active">
@@ -19,6 +23,7 @@
 {{/if}}
 					</div>
 				</div>
+
 				<div class="col-xs-12 col-sm-3">
 				</div>
 				</div>
@@ -43,7 +48,7 @@
 				    <li><span class="label label-success">当前任务已完成</span></li>
 {{/if}}
 {{if $task_info.status eq $smarty.const.TASK_STATUS_ONGOING}}
-				    <li><span class="label label-info">任务下在进行中</span></li>
+				    <li><span class="label label-info">任务正在进行中</span></li>
 {{/if}}
 				</ul>
 				</div>

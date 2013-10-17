@@ -80,7 +80,7 @@ class ArticleDetail extends Base{
 
 			$post['comment'] = p('comment', true, '');
 			$post['cid'] = NULL;
-			$post['tid'] = $id;
+			$post['tid'] = $tid;
 			$post['create_time'] = time();
 			$post['create_ip'] = get_client_ip();
 			$post['status'] = COMMENT_NORMAL;
@@ -95,7 +95,7 @@ class ArticleDetail extends Base{
 				$task_model->comments($tid); // 评论数加1
 				$task_model->modifyLastComment($tid, $login_user_info['user_name']); // 最后评论时间
 				$mem_obj->set($mem_key, $comment_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
-				$url = DOMAIN."/jump/article_article/$id/";
+				$url = DOMAIN."/jump/articlecomment/$id/";
 				$this->pageJump($url);
 			}
 			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
@@ -129,7 +129,7 @@ class ArticleDetail extends Base{
 				$task_model->comments($tid); // 评论数加1
 				$task_model->modifyLastComment($tid, $login_user_info['user_name']); // 最后评论时间
 				$mem_obj->set($mem_key, $reply_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
-				$url = DOMAIN."/jump/article/$id/";
+				$url = DOMAIN."/jump/articlecomment/$id/";
 				$this->pageJump($url);
 			}
 			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
@@ -139,7 +139,7 @@ class ArticleDetail extends Base{
 		$all_cate = $task_cate_model->allCate();
 
 		//点击数加1
-		$task_model->hits($tid);
+		$article_model->hits($id);
 
 		$article_info['article'] = Markdown::defaultTransform($article_info['article']);
 		$article_info['create_time'] = fromat_view_date($article_info['create_time']);

@@ -52,7 +52,7 @@ class AddArticle extends Base{
 			$article_id = $article_model->addArticle($post);
 			if (!empty($article_id)) {
 			    $task_model->setStatus($tid, TASK_STATUS_FINISHED);
-				$url = DOMAIN."/jump/article_detail/$article_id";
+				$url = DOMAIN."/jump/article/$article_id/";
 				$this->pageJump($url);
 			}
             $this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);

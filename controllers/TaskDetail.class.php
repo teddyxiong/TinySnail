@@ -11,6 +11,7 @@ class TaskDetail extends Base{
 		$task_model = new TaskModel();
 		$comment_model = new CommentModel();
 		$task_cate_model = new TaskCateModel();
+		$article_model = new ArticleModel();
 
 		$login_user_info = User::getCurrentLoginUser();
 
@@ -152,6 +153,8 @@ class TaskDetail extends Base{
 
 			if ($task_info['status'] == TASK_STATUS_FINISHED) {
 				$txt = "已完成";
+				$article_info = $article_model->fetchOneArticleByTid($id);
+				$this->tpl->assign('article_info', $article_info);
 			}	elseif ($task_info['status'] == TASK_STATUS_UNFINISHED){
 				$txt = "未完成";
 			}
