@@ -1,0 +1,104 @@
+{{include file="$template_path/header.html"}}
+
+<link href="{{$portal_domain}}/css/datepicker.css" rel="stylesheet">
+
+<div class="container">
+
+<!-- 导航 -->
+<ol class="breadcrumb">
+<li><a href="/home">首页</a></li>
+<li class="active">确认任务</li>
+<li class="active">添加文章</li>
+</ol>
+<hr/>
+<!-- /导航-->
+
+<p><h4>当前文章确认的任务是：<a href="/task_detail/{{$task_info.tid}}/">{{$task_info.subject}}</a></h4></p>
+
+<!--form-->
+<div class="panel panel-default">
+<!-- Default panel contents -->
+<div class="panel-heading">添加文章</div>
+<div class="panel-body">
+
+<form class="form-horizontal" role="form" action="" method="post" target="inner_post_iframe">
+	<input type="hidden" name="post_type" value="add" />
+	<input type="hidden" name="alert_div_id" value="alert_danger" />
+
+	<!-- 提示 -->
+	<div class="form-group">                                                                                      
+	    <label for="inputEmail3" class="col-sm-2 control-label"></label>
+		<div class="col-sm-8">
+			<div class="alert alert-danger" style="display:none" id="alert_danger"> <strong>标题输入不合法...</strong> </div>
+		</div>
+	</div>
+	<!-- /提示 -->
+	<div class="form-group">
+		<label for="inputEmail3" class="col-sm-2 control-label">任务标题</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="subject" id="inputSubject" placeholder="请输入任务的标题...">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="inputPassword3" class="col-sm-2 control-label">选择分类</label>
+		<div class="col-sm-3">
+		<select class="form-control" name="task_cate_id">
+{{foreach from=$all_cate item="cate_name" key="cate_id"}}
+			<option value="{{$cate_id}}">{{$cate_name}}</option>
+{{/foreach}}
+		</select>
+		</div>
+		<div class="col-sm-5"></div>
+	</div>
+	<div class="form-group">
+		<label for="inputPassword3" class="col-sm-2 control-label">文章内容</label>
+		<div class="col-sm-8">
+			<textarea class="form-control" rows="5" name="article"></textarea>
+			<br/>
+			<div class="well">
+			<p>我们支持完整的<a href="http://en.wikipedia.org/wiki/Markdown" target="_blank">MarkDown</a>语法，并且仅支持MarkDown语法。</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-8">
+			<button type="submit" class="btn btn-primary" data-loading-text="正在加载...">提 交</button>
+		</div>
+	</div>
+</form>
+</div>
+</div>
+<!-- /form -->
+
+
+<!-- well -->
+<div class="well">
+<p>
+实实在在干点实事儿。
+</p>
+</div> 
+<!-- /well -->
+
+{{include file="$template_path/footer.html"}}
+<script src="{{$portal_domain}}/js/bootstrap-datepicker.js"></script>
+<script>
+if (top.location != location) {
+	top.location.href = document.location.href ;
+}
+$(function(){
+	window.prettyPrint && prettyPrint();
+	$('#begin_time').datepicker({
+		format: 'yyyy-mm-dd'
+	});
+	$('#finish_time').datepicker({
+		format: 'yyyy-mm-dd'
+	});
+});
+</script>
+
+<iframe name="inner_post_iframe" style="display:block;width:98%;height:300px;"></iframe>
+</body>
+</html>
+

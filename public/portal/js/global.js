@@ -113,3 +113,10 @@ $('#help_integral').modal('hide');
 
 $('#help_philosophy').modal('show');
 $('#help_philosophy').modal('hide');
+
+
+// confirm task
+$("#confirm_task").click(function(){
+     var tid = $(this).attr("confirm_task_id");
+     location.href = "/addarticle/"+tid+"/";
+});

@@ -23,7 +23,7 @@ class AddTask extends Base{
 			$ip = get_client_ip();
 			$begin_for_today = mktime(0,0,0,date("m"),date("d"),date("Y"));
 
-			if (empty($post['subject']) || mb_strlen($post['subject']) < 3 && mb_strlen($post['subject']) > 150) {
+			if (empty($post['subject']) || mb_strlen($post['subject']) < 3 || mb_strlen($post['subject']) > 150) {
 				$this->errors[] = '任务标题必需大于等于3个汉字小于等于150个汉字,并且只允许输入汉字、字母和数字。';
 			}
 

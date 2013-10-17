@@ -5,6 +5,9 @@ class Index extends Base{
 	public function run() {
 		$task_model = new TaskModel();
 
+		// 自动更新已经结束的任务的状态
+		$task_model->autoUpdateOverdueTask();
+
 		// 任务总数
 		$task_total= $task_model->fetchTotal();
 

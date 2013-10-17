@@ -3,19 +3,23 @@ if(!defined('SNAIL')) exit('Illegal Request');
 require PATH_LIBS_VENDORS.DS."PHPMarkdown-1.2.7/Michelf/Markdown.php";
 require PATH_LIBS_VENDORS.DS."PHPMarkdown-1.2.7/Michelf/MarkdownExtra.php";
 use \Michelf\Markdown;
-class TaskDetail extends Base{
+class ArticleDetail extends Base{
 
 	public function run() {
 		$id = g("id", false, '');
-		$mem_obj = new Memcached();
-		$task_model = new TaskModel();
-		$comment_model = new CommentModel();
-		$task_cate_model = new TaskCateModel();
 
+		$mem_obj         = new Memcached();
+		$task_model      = new TaskModel();
+		$comment_model   = new CommentModel();
+		$task_cate_model = new TaskCateModel();
+		$article_model   = new ArticleModel();
+
+		$article_info = $article_model->fetchOneArticle($id);
+		$tid = $article_info['tid'];
 		$login_user_info = User::getCurrentLoginUser();
 
 		// 评论的总数
-		$comment_total= $comment_model->getTotalNumberByTid($id);
+		$comment_total= $comment_model->getTotalNumberByTid($tid);
 
 		// 当前页的评论
 		$page_num = g("p", false, 1);
@@ -25,7 +29,7 @@ class TaskDetail extends Base{
 
 		$page = pages_info($comment_total, $page_num, COMMENT_PAGE_OFFSET);
 
-		$comments = $comment_model->getAllCommentByTid($id, $page_num, COMMENT_PAGE_OFFSET);
+		$comments = $comment_model->getAllCommentByTid($tid, $page_num, COMMENT_PAGE_OFFSET);
 		if (empty($comments)) {
 			$comments = [];
 		}
@@ -88,10 +92,10 @@ class TaskDetail extends Base{
 
 			$comment_id = $comment_model->addComment($post);
 			if (!empty($comment_id)) { 
-				$task_model->comments($id); // 评论数加1
-				$task_model->modifyLastComment($id, $login_user_info['user_name']); // 最后评论时间
+				$task_model->comments($tid); // 评论数加1
+				$task_model->modifyLastComment($tid, $login_user_info['user_name']); // 最后评论时间
 				$mem_obj->set($mem_key, $comment_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
-				$url = DOMAIN."/jump/taskcomment/$id";
+				$url = DOMAIN."/jump/article_article/$id/";
 				$this->pageJump($url);
 			}
 			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
@@ -122,10 +126,10 @@ class TaskDetail extends Base{
 
 			$reply_id = $comment_model->addReply($post);
 			if (!empty($reply_id)) { 
-				$task_model->comments($id); // 评论数加1
-				$task_model->modifyLastComment($id, $login_user_info['user_name']); // 最后评论时间
+				$task_model->comments($tid); // 评论数加1
+				$task_model->modifyLastComment($tid, $login_user_info['user_name']); // 最后评论时间
 				$mem_obj->set($mem_key, $reply_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
-				$url = DOMAIN."/jump/taskcomment/$id";
+				$url = DOMAIN."/jump/article/$id/";
 				$this->pageJump($url);
 			}
 			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
@@ -134,44 +138,18 @@ class TaskDetail extends Base{
 
 		$all_cate = $task_cate_model->allCate();
 
-		$task_info = $task_model->fetchOneTask($id);
-
 		//点击数加1
-		$task_model->hits($task_info['tid']);
+		$task_model->hits($tid);
 
-		$task_info['description'] = Markdown::defaultTransform($task_info['description']);
-		$task_info['create_time'] = fromat_view_date($task_info['create_time']);
+		$article_info['article'] = Markdown::defaultTransform($article_info['article']);
+		$article_info['create_time'] = fromat_view_date($article_info['create_time']);
 
-		$total_time = $task_info['finish_time']-$task_info['begin_time'];
-		$remaining_time = $task_info['finish_time']-time();
-
-		if ($remaining_time < 1) {
-			$task_info['schedule'] = 100;
-			$begin_time = date("Y-m-d", $task_info['begin_time']);
-			$finish_time = date("Y-m-d", $task_info['finish_time']);
-
-			if ($task_info['status'] == TASK_STATUS_FINISHED) {
-				$txt = "已完成";
-			}	elseif ($task_info['status'] == TASK_STATUS_UNFINISHED){
-				$txt = "未完成";
-			}
-			$task_info['schedule_txt'] = "{$txt}[$begin_time $finish_time]";
-			$task_info['schedule_txt_local'] = "left";
-		} else if ($remaining_time > ($total_time-$remaining_time)) {
-			$task_info['schedule'] = ceil((1-$remaining_time/$total_time)*100);
-			$task_info['schedule_txt'] = "距任务结束还有：".ceil($remaining_time/86400)."天";
-			$task_info['schedule_txt_local'] = "right";
-		} else {
-			$task_info['schedule'] = ceil((1-$remaining_time/$total_time)*100);
-			$task_info['schedule_txt'] = "距任务结束还有：".ceil($remaining_time/86400)."天";
-			$task_info['schedule_txt_local'] = "left";
-		}
-
-		$this->tpl->assign('task_info',$task_info);
+		$this->tpl->assign('article_info',$article_info);
 		$this->tpl->assign('all_cate',$all_cate);
 		$this->tpl->assign('comments',$comments);
 		$this->tpl->assign('reply_list',$reply_list);
 		$this->tpl->assign('page',$page);
-		$this->tpl->display('task_detail.html');
+
+		$this->tpl->display('article_detail.html');
 	}
 }

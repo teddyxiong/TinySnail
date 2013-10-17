@@ -159,6 +159,18 @@ class TaskModel extends BaseModel {
 		}
 	}
 
+	public function autoUpdateOverdueTask() {
+		$now = time();
+		$query = "update {$this->tb_tasks} set status=".TASK_STATUS_UNFINISHED;
+		$query.= " where finish_time<=$now and status=".TASK_STATUS_ONGOING;
+		$this->db->ExecuteSQL($query);                                                               
+	}
+
+	public function setStatus($id, $status) {
+		$query = "update {$this->tb_tasks} set status='{$status}' where tid='$id'";
+		$this->db->ExecuteSQL($query); 
+	}
+
 	public function fetchTotal() {	
 		$query = "select count(tid) total from {$this->tb_tasks} ";
 		$ret = $this->db->ExecuteSQL($query);                                                               

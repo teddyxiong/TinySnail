@@ -5,50 +5,26 @@
 <!-- 导航 -->
 <ol class="breadcrumb">
 <li><a href="/home">首页</a></li>
-<li class="active">任务详情</li>
+<li class="active">文章详情</li>
 </ol>
 <hr/>
 <!-- /导航-->
-<div class="row row-offcanvas row-offcanvas-right">
-				<div class="col-xs-12 col-sm-9">
-					<div class="progress progress-striped active">
-						<div class="progress-bar progress-bar-info"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"  style="width: {{$task_info.schedule}}%">{{if $task_info.schedule_txt_local eq 'left'}} <strong class="text-muted">&nbsp;{{$task_info.schedule_txt}}</strong>
-{{/if}}</div>
-{{if $task_info.schedule_txt_local eq 'right'}}
-<strong class="text-muted">&nbsp;{{$task_info.schedule_txt}}</strong>
-{{/if}}
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-3">
-				</div>
-				</div>
 <div class="row row-offcanvas row-offcanvas-right">
 	<div class="col-xs-12 col-sm-9"> <!--span-->
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-body">
-				<h3 ><a href="/u/{{$task_info.user_name}}" target="_blank"><img src="{{$task_info.avatar}}" width="25" height="25" class="img-rounded" ></img></a>&nbsp;<strong>{{$task_info.subject}}</strong></h3>
+				<h3 ><a href="/u/{{$article_info.user_name}}" target="_blank"><img src="{{$article_info.avatar}}" width="25" height="25" class="img-rounded" ></img></a>&nbsp;<strong>{{$article_info.subject}}</strong></h3>
 				<div class="text-muted">
 				<ul class="list-inline">
-				    <li><a href="/u/{{$task_info.user_name}}" target="_blank">{{$task_info.user_name}}</a> 发表于：{{$task_info.create_time}}</li>
-				    <li>{{$task_info.hits}} 次阅读</li>
-				    <li><a href="#comment_input">{{$task_info.comments}}</a> 条评论</li>
-{{if $task_info.status eq $smarty.const.TASK_STATUS_UNFINISHED}}
-				    <li><span class="label label-warning">当前任务未完成</span></li>
-{{if $login_uid eq $task_info.uid}}
-				    <li><button type="button" class="btn btn-primary btn-xs" id="confirm_task" confirm_task_id="{{$task_info.tid}}">确认完成</button></li>
-{{/if}}
-{{/if}}
-{{if $task_info.status eq $smarty.const.TASK_STATUS_FINISHED}}
+				    <li><a href="/u/{{$article_info.user_name}}" target="_blank">{{$article_info.user_name}}</a> 发表于：{{$article_info.create_time}}</li>
+				    <li>{{$article_info.hits}} 次阅读</li>
+				    <li><a href="#comment_input">{{$article_info.comments}}</a> 条评论</li>
 				    <li><span class="label label-success">当前任务已完成</span></li>
-{{/if}}
-{{if $task_info.status eq $smarty.const.TASK_STATUS_ONGOING}}
-				    <li><span class="label label-info">任务下在进行中</span></li>
-{{/if}}
 				</ul>
 				</div>
 				<hr/>
-				<div style="line-height:28px;letter-spacing:1px;"> {{$task_info.description}} </div>
+				<div style="line-height:28px;letter-spacing:1px;"> {{$article_info.article}} </div>
 				<a name="comment_input">.</a>
 			</div>
 		</div>
