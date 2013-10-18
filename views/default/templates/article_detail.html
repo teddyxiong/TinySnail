@@ -136,20 +136,9 @@
 {{$page}}
 	</div>
 
-	<div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">                                 
-		<div class="panel panel-default">
-			<div class="panel-heading">热门任务</div>
-				<ul class="list-group">
-					<li class="list-group-item">
-						Cras justo odio
-					</li>
-					<li class="list-group-item">
-						Cras justo odio
-					</li>
-				</ul>
-			</div>
-		</div><!--/span-->
-	</div> 
+{{include file="$template_path/hot_tasks.html"}}
+{{include file="$template_path/hot_article.html"}} 
+</div>
 
 {{include file="$template_path/footer.html"}}
 <iframe name="inner_post_iframe" style="display:block;width:98%;height:300px;"></iframe>

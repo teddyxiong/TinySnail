@@ -1,10 +1,16 @@
 <?php
 if(!defined('SNAIL')) exit('Illegal Request');
-class Index extends Base{
+
+require PATH_CONTROLLERS.DS.'HotData.class.php';
+
+class Index extends HotData{
 
 	public function run() {
 		$task_model = new TaskModel();
 		$task_cate_model = new TaskCateModel();
+
+		// 推荐相关的数据
+		$this->initHotData();
 
 		// 自动更新已经结束的任务的状态
 		$task_model->autoUpdateOverdueTask();

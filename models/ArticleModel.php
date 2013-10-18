@@ -33,7 +33,7 @@ class ArticleModel extends BaseModel {
 		return null;
 	}
 
-	public function fetchAllTask($page_num, $offset=20) {
+	public function fetchAllArticle($page_num, $offset=20) {
 		$start = ($page_num-1)*$offset;
 		$query = "select a.*, u.user_name, u.avatar from {$this->tb_article} AS a, {$this->tb_users} AS u";
 		$query .= " where a.uid=u.uid order by a.aid DESC LIMIT $start, $offset";
@@ -41,6 +41,17 @@ class ArticleModel extends BaseModel {
 		if ($list) {
 			return $list;
 		}
+		return null;
+	}
+
+	public function fetchHotArticles($num=20) {
+		$query = "select aid,subject from {$this->tb_article} ";
+		$query .= "order by hits DESC LIMIT $num";
+		$list = $this->db->ExecuteSQL($query);
+		if ($list) {
+			return $list;
+		}
+		return null;
 	}
 
 	public function fetchTotal() {	

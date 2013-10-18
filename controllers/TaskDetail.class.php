@@ -3,7 +3,10 @@ if(!defined('SNAIL')) exit('Illegal Request');
 require PATH_LIBS_VENDORS.DS."PHPMarkdown-1.2.7/Michelf/Markdown.php";
 require PATH_LIBS_VENDORS.DS."PHPMarkdown-1.2.7/Michelf/MarkdownExtra.php";
 use \Michelf\Markdown;
-class TaskDetail extends Base{
+
+require PATH_CONTROLLERS.DS.'HotData.class.php';
+
+class TaskDetail extends HotData{
 
 	public function run() {
 		$id = g("id", false, '');
@@ -12,6 +15,9 @@ class TaskDetail extends Base{
 		$comment_model = new CommentModel();
 		$task_cate_model = new TaskCateModel();
 		$article_model = new ArticleModel();
+
+		// 推荐相关的数据
+		$this->initHotData();  
 
 		$login_user_info = User::getCurrentLoginUser();
 

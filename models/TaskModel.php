@@ -166,6 +166,15 @@ class TaskModel extends BaseModel {
 		}
 	}
 
+	public function fetchHotTasks($num=15) {
+		$query = "select tid, subject from {$this->tb_tasks} ";
+		$query .= "order by hits DESC LIMIT $num";
+		$task_list = $this->db->ExecuteSQL($query);                                                               
+		if ($task_list) {
+			return $task_list;
+		}
+	}
+
 	public function autoUpdateOverdueTask() {
 		$now = time();
 		$query = "update {$this->tb_tasks} set status=".TASK_STATUS_UNFINISHED;

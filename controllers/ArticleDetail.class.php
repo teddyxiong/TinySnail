@@ -2,8 +2,9 @@
 if(!defined('SNAIL')) exit('Illegal Request');
 require PATH_LIBS_VENDORS.DS."PHPMarkdown-1.2.7/Michelf/Markdown.php";
 require PATH_LIBS_VENDORS.DS."PHPMarkdown-1.2.7/Michelf/MarkdownExtra.php";
+require PATH_CONTROLLERS.DS.'HotData.class.php';
 use \Michelf\Markdown;
-class ArticleDetail extends Base{
+class ArticleDetail extends HotData{
 
 	public function run() {
 		$id = g("id", false, '');
@@ -17,6 +18,9 @@ class ArticleDetail extends Base{
 		$article_info = $article_model->fetchOneArticle($id);
 		$tid = $article_info['tid'];
 		$login_user_info = User::getCurrentLoginUser();
+
+		// 推荐相关的数据
+		$this->initHotData();
 
 		// 评论的总数
 		$comment_total= $comment_model->getTotalNumberByTid($tid);
