@@ -1,0 +1,12 @@
+<div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+<div class="panel panel-default">
+<div class="panel-heading">热门文章</div>
+<ul class="list-group">
+{{foreach from=$hot_articles item="article"}}
+<li class="list-group-item">
+<a href="/article_detail/{{$article.aid}}/" title="{{$article.subject}}">{{$article.subject|truncate:18:"...":true}}</a>
+</li>
+{{/foreach}}
+</ul>
+</div>
+</div><!--/span-->
