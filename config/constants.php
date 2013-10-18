@@ -34,4 +34,10 @@ define('TASK_STATUS_DELETED', -1); // 任务已删除。
 define('TASK_STATUS_ONGOING', 1); // 进行中。
 define('TASK_STATUS_FINISHED', 2); // 已完成。
 define('TASK_STATUS_UNFINISHED', 3); // 未完成。
+
+
+define('HOT_TASK_VIEW_NUM', 10); // 热门任务显示的数量
+define('HOT_ARTICLE_VIEW_NUM', 10); // 热门文章显示的数量
+define('HOTDATA_CACHE_EXPIRE', 3600); // 缓存的生存时间
 ?>
+
