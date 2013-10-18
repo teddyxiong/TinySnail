@@ -23,11 +23,15 @@ class SignIn extends Base{
 			$user_info = object_to_array($user_info);
 			$user_model = new UserModel();
 
+			if (empty($user_info['email'])) {
+				$user_info['email'] = $user_info['login']."@github.com";
+			}
+
 			// 用户不存在时先注册和绑定帐号
-			$existing_uid = $user_model->userIsExists($user_info['name'], $user_info['email']);
+			$existing_uid = $user_model->userIsExists($user_info['login'], $user_info['email']);
 			if (false==$existing_uid){
-				$pwd = $user_info['name'];
-				$uid = $user_model->registerNewUser($user_info['name'], $user_info['email'], $pwd,$pwd,$user_info['avatar_url']);
+				$pwd = $user_info['login'];
+				$uid = $user_model->registerNewUser($user_info['login'], $user_info['email'], $pwd,$pwd,$user_info['avatar_url']);
 				if (is_array($uid)) {
 					display_error_page('注册失败', $uid[0]);
 				}

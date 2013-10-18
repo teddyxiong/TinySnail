@@ -165,5 +165,5 @@ CREATE TABLE `followers` (
 	`relation` tinyint(3) NOT NULL DEFAULT '1' comment '0-未关注,1-关注,2-相互关注',
 	PRIMARY KEY (`fid`),
 	KEY `uid` (`uid`),
-	KEY `uid` (`follower_uid`)
+	KEY `follower_uid` (`follower_uid`)
 )ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

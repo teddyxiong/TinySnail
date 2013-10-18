@@ -33,10 +33,17 @@ class ArticleModel extends BaseModel {
 		return null;
 	}
 
-	public function fetchAllArticle($page_num, $offset=20) {
+	public function fetchAllArticle($condition, $page_num, $offset=20) {
 		$start = ($page_num-1)*$offset;
-		$query = "select a.*, u.user_name, u.avatar from {$this->tb_article} AS a, {$this->tb_users} AS u";
-		$query .= " where a.uid=u.uid order by a.aid DESC LIMIT $start, $offset";
+		$condition_str = "";
+		if (!empty($condition) && is_array($condition)) {
+			foreach($condition as $k=>$v) {
+				$condition_str .= " and a.$k='$v' ";
+			}
+		}
+		$query = "select a.*, u.user_name, u.avatar, t.comment_last_time,t.comments,t.comment_last_user_name,t.comment_last_time from {$this->tb_article} AS a, {$this->tb_users} AS u, {$this->tb_tasks} AS t";
+		$query .= " where a.uid=u.uid and a.tid=t.tid $condition_str order by a.aid DESC LIMIT $start, $offset";
+
 		$list = $this->db->ExecuteSQL($query);                                                               
 		if ($list) {
 			return $list;
@@ -54,8 +61,14 @@ class ArticleModel extends BaseModel {
 		return null;
 	}
 
-	public function fetchTotal() {	
-		$query = "select count(aid) total from {$this->tb_article} ";
+	public function fetchTotal($condition) {	
+		$condition_str = "";
+		if (!empty($condition) && is_array($condition)) {
+			foreach($condition as $k=>$v) {
+				$condition_str .= " and $k='$v' ";
+			}
+		}
+		$query = "select count(aid) total from {$this->tb_article} where 1 $condition_str";
 		$ret = $this->db->ExecuteSQL($query);                                                               
 		if ($ret['total']) {
 			return $ret['total'];

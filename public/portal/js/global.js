@@ -120,3 +120,18 @@ $("#confirm_task").click(function(){
      var tid = $(this).attr("confirm_task_id");
      location.href = "/addarticle/"+tid+"/";
 });
+
+// set follower
+$("#set_follower").click(function(){
+     location.href = "?setrelation=set_follower";
+});
+
+// cancel follower
+$("#cancel_follower").click(function(){
+     location.href = "?setrelation=cancel_follower";
+});
+
+// cancel follower mutual
+$("#cancel_follower_mutual").click(function(){
+     location.href = "?setrelation=cancel_follower_mutual";
+});

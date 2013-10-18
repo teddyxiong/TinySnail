@@ -3,10 +3,7 @@ if(!defined('SNAIL')) exit('Illegal Request');
 class Account extends Base{
 
 	public function run() {
-		$task_model = new TaskModel();
 		$user_model = new UserModel();
-
-		$tasks = $task_model->fetchAllTask();
 
 		$tabs = ["task", "article", "fans", "follower", "send_message", "message", "settings"];
 		$tab = g("tab", true, 'task');
@@ -19,10 +16,101 @@ class Account extends Base{
 		$user_info = $user_model->getUserByName($user_name);
 		$user_info['extend'] = unserialize($user_info['extend']);
 		$user_info['user_registration_timeline'] = date("Y-m-d H:i:s", $user_info['user_registration_timeline']);
+
+		if ('task' == $tab) {
+			$this->setTasks($user_info['uid']);
+		} elseif ('article' == $tab) {
+			$this->setArticles($user_info['uid']);
+		}
+
+		$this->userRelation($user_info['uid']);
 		
 		$this->tpl->assign('tab',$tab);
-		$this->tpl->assign('tasks',$tasks);
 		$this->tpl->assign('user_info',$user_info);
 		$this->tpl->display('account.html');
+	}
+
+	private function userRelation($uid) {
+		$follower_model = new FollowerModel();
+		$action = g('setrelation', true, '');
+		if ('set_follower' == $action) {
+			$friend_follower = $follower_model->userFollowedUser($uid, $this->uid);
+			if ($friend_follower['relation'] == SN_FOLLOWER_YES) {
+				$follower_model->follower($this->uid, $uid, SN_FOLLOWER_MUTUAL);
+				$follower_model->updateRelation($uid, $this->uid, SN_FOLLOWER_MUTUAL);
+			} else {
+				$follower_model->follower($this->uid, $uid, SN_FOLLOWER_YES);
+			}
+		}
+		if ($this->uid > 0 && $this->uid != $uid) {
+			$user_relation = $follower_model->getUserRelation($this->uid, $uid);
+			$this->tpl->assign('user_relation',$user_relation);
+		} else {
+			$this->tpl->assign('user_relation','no');
+		}
+	}
+
+	private function setTasks($uid) {
+		$task_model = new TaskModel();
+		$search_condition = [];
+		$search_condition['uid'] = $uid;
+
+		// 任务总数
+		$task_total= $task_model->fetchTotal($search_condition);
+
+		// 任务列表
+		$p = g("p", true, 1);
+		if ($p < 1) $p = 1;
+
+		$pages = ceil(($task_total/TASK_PAGE_OFFSET));
+
+		if ($p > $pages) $p = $pages;
+
+		$page_info = pages_info($task_total, $p, TASK_PAGE_OFFSET);
+
+		$task_list = $task_model->fetchAllTask($search_condition, $p, TASK_PAGE_OFFSET);
+		if (!empty($task_list['tid'])) {
+			$tmp = $task_list;
+			$task_list = array(0=>$tmp);
+		}
+		foreach($task_list as $k=>$task) {
+			$task_list[$k]['create_time'] = fromat_view_date($task['create_time']);                               
+			$task_list[$k]['comment_last_time'] = fromat_view_date($task['comment_last_time']);
+		}
+		$this->tpl->assign('tasks',$task_list);
+		$this->tpl->assign('page_info',$page_info);
+	}
+
+	private function setArticles($uid) {
+		$article_model = new ArticleModel();
+		$search_condition = [];
+		$search_condition['uid'] = $uid;
+
+		// 任务总数
+		$article_total= $article_model->fetchTotal($search_condition);
+
+		// 任务列表
+		$p = g("p", true, 1);
+		if ($p < 1) $p = 1;
+
+		$pages = ceil(($article_total/TASK_PAGE_OFFSET));
+
+		if ($p > $pages) $p = $pages;
+
+		$page_info = pages_info($article_total, $p, TASK_PAGE_OFFSET);
+
+		$list = $article_model->fetchAllArticle($search_condition, $p, TASK_PAGE_OFFSET);
+		if (!empty($list['tid'])) {
+			$tmp = $list;
+			$list = array(0=>$tmp);
+		}
+
+		foreach($list as $k=>$article) {
+			$list[$k]['create_time'] = fromat_view_date($article['create_time']);                               
+			$list[$k]['comment_last_time'] = fromat_view_date($article['comment_last_time']);
+		}
+		
+		$this->tpl->assign('articles',$list);
+		$this->tpl->assign('page_info',$page_info);
 	}
 }

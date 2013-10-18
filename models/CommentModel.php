@@ -27,7 +27,7 @@ class CommentModel extends BaseModel {
 	public function getAllCommentByTid($tid, $page_num=1, $offset=20) {
 		$start = ($page_num-1)*$offset;
 		$query = "select c.*, u.user_name,u.uid,u.avatar from {$this->tb_comment} AS c, {$this->tb_user} AS u";
-		$query .= " where c.tid='$tid' order by c.cid asc limit $start, $offset";
+		$query .= " where c.tid='$tid' and c.uid=u.uid order by c.cid asc limit $start, $offset";
 		$comment_info = $this->db->ExecuteSQL($query);
 		if ($comment_info) {
 			return $comment_info;
@@ -43,7 +43,7 @@ class CommentModel extends BaseModel {
 			$where = "r.cid='$cid'";
 		}
 		$query = "select r.*, u.user_name,u.uid,u.avatar from {$this->tb_comment_reply} AS r, {$this->tb_user} AS u";
-		$query .= " where $where order by r.rid asc";
+		$query .= " where $where and r.uid=u.uid order by r.rid asc";
 		$reply_info = $this->db->ExecuteSQL($query);
 		if ($reply_info) {
 			return $reply_info;

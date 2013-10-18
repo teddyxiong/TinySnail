@@ -39,5 +39,10 @@ define('TASK_STATUS_UNFINISHED', 3); // 未完成。
 define('HOT_TASK_VIEW_NUM', 10); // 热门任务显示的数量
 define('HOT_ARTICLE_VIEW_NUM', 10); // 热门文章显示的数量
 define('HOTDATA_CACHE_EXPIRE', 3600); // 缓存的生存时间
+
+// user relation 0-未关注,1-关注,2-相互关注
+define('SN_FOLLOWER_NO', 0); 
+define('SN_FOLLOWER_YES', 1); 
+define('SN_FOLLOWER_MUTUAL', 2); 
 ?>
 

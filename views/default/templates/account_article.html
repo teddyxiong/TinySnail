@@ -3,7 +3,27 @@
 <!-- Default panel contents -->
 <div class="panel-heading">文章列表</div>                                                                         
 <div class="panel-body">
-正在建设,请11月再来...... 
-</table>            
+
+<!-- tasks list-->
+<table class="table table-hover">
+<tbody>
+{{foreach from=$articles item="info"}}
+<tr class="row">
+<td>
+<div class="">
+<a href="/article_detail/{{$info.aid}}/">{{$info.subject}}。</a>
 </div>
+<div>
+<small class="text-muted">此文章由 <a href="/u/{{$info.user_name}}">{{$info.user_name}}</a>&nbsp;       
+于&nbsp;{{$info.create_time}}&nbsp;发布&nbsp;&nbsp;{{if $info.comment_last_user_name}}|&nbsp;&nbsp;     
+最后回复&nbsp;<a href="/u/{{$info.comment_last_user_name}}">{{$info.comment_last_user_name}}</a>&nbsp;  
+{{$info.comment_last_time}}{{/if}}</small>
 </div>
+</td>       
+</tr>
+{{/foreach}}
+</table>
+
+</div>
+<div align="center">{{$page_info}}</div>
+</div> 

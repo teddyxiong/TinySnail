@@ -5,7 +5,7 @@
 <!-- 导航 -->
 <ol class="breadcrumb">                                                                                           
 <li><a href="/home">首页</a></li>
-<li class="active">用户详情</li>
+<li class="active">用户中心</li>
 </ol>
 <hr/>
 <!-- /导航-->
@@ -14,13 +14,36 @@
 <div class="row row-offcanvas row-offcanvas-right">
 <div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">                                 
 <img src="{{$user_info.avatar}}&s=440" class="img-rounded" height="220" width="220">
-<h3>{{$user_info.user_name}}</h3>
+<p></p>
+<div align="center">
+{{if $user_relation neq 'no'}}
+	{{if $user_relation eq $smarty.const.SN_FOLLOWER_MUTUAL}}
+	<button type="button" class="btn btn-primary" id="cancel_follower_mutual">取消关注</button> 
+		相互关注 
+	{{elseif $user_relation eq $smarty.const.SN_FOLLOWER_YES}}
+		<button type="button" class="btn btn-primary" id="cancel_follower">取消关注</button> 
+	{{elseif $user_relation eq $smarty.const.SN_FOLLOWER_NO}}
+		<button type="button" class="btn btn-primary" id="set_follower">关注</button> 
+	{{/if}}
+{{/if}}
+</div>
+
+{{if isset($user_info.user_name) }}
+<h3>{{$user_info.user_name}}</h3>                                                                                 
+{{/if}}
 <h5>{{$user_info.login_name}}</h5>
+
 <hr/>
+{{if isset($user_info.extend.blog)}}
 <h5><strong>博客：</strong><small>{{$user_info.extend.blog}}</small></h5>
-<h5><strong>邮箱：</strong><small>{{$user_info.user_email}}</small></h5>
+{{/if}}
+<h5><strong>邮箱：</strong><small>{{$user_info.user_email|regex_replace:"/@github\.com/":"..."}}</small></h5>
+{{if isset($user_info.extend.compny)}}
 <h5><strong>就职公司：</strong><small>{{$user_info.extend.company}}</small></h5>
+{{/if}}
+{{if isset($user_info.extend.location)}}
 <h5><strong>所在地区：</strong><small>{{$user_info.extend.location}}</small></h5>
+{{/if}}
 <h5><strong>注册时间：</strong><small>{{$user_info.user_registration_timeline}}</small></h5>
 <h5><strong>{{if $user_info.uid eq $login_uid}}我的项目{{else}}Ta的项目{{/if}}：</strong><small><a href="http://github.com/{{$user_info.login_name}}" target="_blank">GitHub repositories</a></small></h5>
 </div><!--/span-->

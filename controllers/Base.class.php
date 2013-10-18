@@ -3,15 +3,20 @@ if(!defined('SNAIL')) exit('Illegal Request');
 class Base {
 
     protected $tpl;	
+    protected $uid;	
+    protected $user_info;	
 
 	public function __construct()
 	{
 		$this->tpl = new Template();
 
 		$this->setWell();
+
 		// 用户信息
-		$this->tpl->assign('userinfo', User::getCurrentLoginUser());
-		$this->tpl->assign('uid', User::getUid());
+		$this->uid = User::getUid();
+		$this->user_info = User::getCurrentLoginUser();
+		$this->tpl->assign('uid', $this->uid);
+		$this->tpl->assign('userinfo', $this->user_info);
 	}
 
 	private function setWell() {
