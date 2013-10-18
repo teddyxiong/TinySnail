@@ -29,7 +29,7 @@ define('MEMCACHE_HOST', '192.168.1.123');
 define('MEMCACHE_PORT', 12111);
 
 #task set
-define('TASK_PAGE_OFFSET', 20); // 每页显示的任务数。
+define('TASK_PAGE_OFFSET', 10); // 每页显示的任务数。
 define('TASK_STATUS_DELETED', -1); // 任务已删除。
 define('TASK_STATUS_ONGOING', 1); // 进行中。
 define('TASK_STATUS_FINISHED', 2); // 已完成。

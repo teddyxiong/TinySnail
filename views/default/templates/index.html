@@ -3,21 +3,21 @@
 <div class="container">
 
 <!-- Split button -->
-<div class="btn-group">
-<button type="button" class="btn btn-danger">查询操作</button>
-<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
-<span class="caret"></span>
-<span class="sr-only">Toggle Dropdown</span>
-</button>
-<ul class="dropdown-menu" role="menu">
-<li><a href="#">查看正在执行的任务</a></li>
-<li><a href="#">查看正在执行的任务</a></li>
-<li><a href="#">查看正在执行的任务</a></li>
-<li class="divider"></li>
-<li><a href="#">所有任务</a></li>
-<li><a href="#">我的任务</a></li>
-<li><a href="#">我的文章</a></li>
-</ul>
+<div class="text-muted">
+	<ul class="list-inline">
+{{if isset($smarty.get.cate_id) and $smarty.get.cate_id>0}}
+	<li><a href="/" target="_self">全部</a></li>
+{{else}}
+	<li><span class="label label-info">全部</span></li>
+{{/if}}
+{{foreach from=$all_cate item="cate_name" key="cate_id"}}                                                         
+	{{if $smarty.get.cate_id eq $cate_id}}
+		<li><span class="label label-info">{{$cate_name}}</span></li>
+	{{else}}
+		<li><a href="/{{$cate_id}}/" target="_self">{{$cate_name}}</a></li>
+	{{/if}}
+{{/foreach}}
+	</ul>
 </div>
 <hr/>
 <!-- /Split button-->

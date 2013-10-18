@@ -33,7 +33,7 @@
 </td>
 <td class="col-xs-12 col-md-9" style="">
 <div class="">
-<a href="task_detail/{{$task_info.tid}}/">{{$task_info.subject}}。</a>
+<a href="/task_detail/{{$task_info.tid}}/">{{$task_info.subject}}。</a>
 </div>
 <div>
 <small class="text-muted">此任务由 <a href="/u/{{$task_info.user_name}}">{{$task_info.user_name}}</a>&nbsp;于&nbsp;{{$task_info.create_time}}&nbsp;发布&nbsp;&nbsp;{{if $task_info.comment_last_user_name}}|&nbsp;&nbsp;最后回复&nbsp;<a href="/u/{{$task_info.comment_last_user_name}}">{{$task_info.comment_last_user_name}}</a>&nbsp;{{$task_info.comment_last_time}}{{/if}}</small>

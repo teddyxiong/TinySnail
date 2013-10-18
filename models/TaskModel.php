@@ -149,10 +149,17 @@ class TaskModel extends BaseModel {
 		return null;
 	}
 
-	public function fetchAllTask($page_num, $offset=20) {
+	public function fetchAllTask($condition, $page_num, $offset=20) {
 		$start = ($page_num-1)*$offset;
+
+		$condition_str = "";
+		if (!empty($condition) && is_array($condition)) {
+			foreach($condition as $k=>$item) {
+				$condition_str .= " and t.$k='$item' ";
+			}
+		}
 		$query = "select t.*, u.user_name, u.avatar from {$this->tb_tasks} AS t, {$this->tb_users} AS u";
-		$query .= " where t.uid=u.uid order by t.comment_last_time DESC LIMIT $start, $offset";
+		$query .= " where t.uid=u.uid {$condition_str} order by t.comment_last_time DESC LIMIT $start, $offset";
 		$task_list = $this->db->ExecuteSQL($query);                                                               
 		if ($task_list) {
 			return $task_list;
@@ -171,8 +178,14 @@ class TaskModel extends BaseModel {
 		$this->db->ExecuteSQL($query); 
 	}
 
-	public function fetchTotal() {	
-		$query = "select count(tid) total from {$this->tb_tasks} ";
+	public function fetchTotal($condition) {	
+		$condition_str = "";
+		if (!empty($condition) && is_array($condition)) {
+			foreach($condition as $k=>$item) {
+				$condition_str .= " and $k='$item' ";
+			}
+		}
+		$query = "select count(tid) total from {$this->tb_tasks} where 1 {$condition_str}";
 		$ret = $this->db->ExecuteSQL($query);                                                               
 		if ($ret['total']) {
 			return $ret['total'];
