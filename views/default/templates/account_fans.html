@@ -3,7 +3,23 @@
 <!-- Default panel contents -->
 <div class="panel-heading"> 粉丝列表</div> 
 <div class="panel-body">
-正在建设,请11月再来...... 
-</table>            
+
+<div class="row">
+{{foreach from=$fans_list item="fans"}}
+	{{if $fans.relation eq $smarty.const.SN_FOLLOWER_MUTUAL}}
+		{{assign var=relation value="[相互关注]"}}
+	{{else}}
+		{{assign var=relation value=""}}
+	{{/if}}
+	<div class="col-sm-6 col-md-3">
+		<a href="/u/{{$fans.user_name}}/" class="thumbnail">
+			<img src="{{$fans.avatar|escape:'htmlall'}}&s=440" alt="{{$fans.user_name}}{{$relation}}" title="{{$fans.user_name}}{{$relation}}" width="171" height="180">
+		</a>
+	</div>
+{{foreachelse}}
+<div>&nbsp;还没有粉丝...</div>
+{{/foreach}}
+</div>
+
 </div>
 </div>

@@ -21,33 +21,77 @@ class Account extends Base{
 			$this->setTasks($user_info['uid']);
 		} elseif ('article' == $tab) {
 			$this->setArticles($user_info['uid']);
+		}elseif ('fans' == $tab) {
+			$this->setFans($user_info['uid']);
+		} elseif ('follower' == $tab) {
+			$this->setFollower($user_info['uid']);
 		}
 
-		$this->userRelation($user_info['uid']);
+		$this->userRelation($user_info['uid'], $user_name);
 		
 		$this->tpl->assign('tab',$tab);
 		$this->tpl->assign('user_info',$user_info);
 		$this->tpl->display('account.html');
 	}
 
-	private function userRelation($uid) {
+	private function userRelation($uid, $user_name) {
+		$url = DOMAIN."/u/$user_name/";
 		$follower_model = new FollowerModel();
 		$action = g('setrelation', true, '');
 		if ('set_follower' == $action) {
-			$friend_follower = $follower_model->userFollowedUser($uid, $this->uid);
+			$friend_follower = $follower_model->getUserRelation($uid, $this->uid);
 			if ($friend_follower['relation'] == SN_FOLLOWER_YES) {
 				$follower_model->follower($this->uid, $uid, SN_FOLLOWER_MUTUAL);
-				$follower_model->updateRelation($uid, $this->uid, SN_FOLLOWER_MUTUAL);
+				$follower_model->follower($uid, $this->uid, SN_FOLLOWER_MUTUAL);
 			} else {
 				$follower_model->follower($this->uid, $uid, SN_FOLLOWER_YES);
 			}
+			redirect($url);
+		} elseif ('cancel_follower' == $action) {
+			$friend_follower = $follower_model->getUserRelation($uid, $this->uid);
+			if ($friend_follower['relation'] == SN_FOLLOWER_MUTUAL) {
+				$follower_model->cancelFollower($this->uid, $uid);
+				$follower_model->follower($uid, $this->uid, SN_FOLLOWER_YES);
+			} else {
+				$follower_model->cancelFollower($this->uid, $uid);
+			}
+			redirect($url);
 		}
+
 		if ($this->uid > 0 && $this->uid != $uid) {
 			$user_relation = $follower_model->getUserRelation($this->uid, $uid);
 			$this->tpl->assign('user_relation',$user_relation);
 		} else {
 			$this->tpl->assign('user_relation','no');
 		}
+	}
+
+	private function setFollower($uid) {
+		$follower_model = new FollowerModel();
+		$follower_list = $follower_model->fetchAllFollowers($uid);
+		if (isset($follower_list['fid'])) {
+			$tmp = $follower_list;
+			$follower_list = [];
+			$follower_list[] = $tmp;
+		}
+
+		if (true === $follower_list) $follower_list = [];
+
+		$this->tpl->assign('follower_list',(array)$follower_list);
+	}
+
+	private function setFans($uid) {
+		$follower_model = new FollowerModel();
+		$fans_list = $follower_model->fetchAllFans($uid);
+		if (isset($fans_list['fid'])) {
+			$tmp = $fans_list;
+			$fans_list = [];
+			$fans_list[] = $tmp;
+		}
+
+		if (true === $fans_list) $fans_list = [];
+
+		$this->tpl->assign('fans_list',(array)$fans_list);
 	}
 
 	private function setTasks($uid) {
