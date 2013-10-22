@@ -52,6 +52,8 @@ class AddArticle extends Base{
 			$article_id = $article_model->addArticle($post);
 			if (!empty($article_id)) {
 			    $task_model->setStatus($tid, TASK_STATUS_FINISHED);
+				$user_model = new UserModel();                                                                    
+				$user_model->modifyScore($this->uid, 'create_article'); // 增加积分
 				$url = DOMAIN."/jump/article/$article_id/";
 				$this->pageJump($url);
 			}

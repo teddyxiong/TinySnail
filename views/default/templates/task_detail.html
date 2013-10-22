@@ -54,6 +54,39 @@
 				</div>
 				<hr/>
 				<div style="line-height:28px;letter-spacing:1px;"> {{$task_info.description}} </div>
+
+				<div>
+				<!-- 提示 -->
+				<div class="form-group">
+				<div class="alert alert-danger" style="display:none" id="attach_info_alert_danger">                       
+				<strong>标题输入不合法...</strong> </div>
+				</div>
+				<!-- /提示 -->
+{{if $login_uid eq $task_info.uid}}
+				<form class="form-inline" role="form"action="" method="post"              target="inner_post_iframe">
+				<input type="hidden" name="posttype" value="attach"/>
+				<div class="form-group">
+				<label class="sr-only" for="">附加信息:</label>
+				<input type="text" class="form-control" name="attach_info" size="88" placeholder="请输入附加信息...">
+				</div>
+				&nbsp;
+				<button type="submit" class="btn btn-info">&nbsp;提&nbsp;交&nbsp;</button>
+				</form>
+{{/if}}
+				<br/>
+{{if isset($attach_info_list) }}
+				<div class="panel panel-info">
+				  <div class="panel-heading">附加信息：</div>
+				    <div class="panel-body">
+{{foreach from=$attach_info_list item=attach}}
+					<p class="text-info">{{$attach.content}}&nbsp;&nbsp;<small>[&nbsp;发表于：{{$attach.create_time}}&nbsp;]</small></p>
+{{foreachelse}}
+...
+{{/foreach}}
+						  </div>
+						  </div>
+{{/if}}
+				</div>
 				<a name="comment_input">.</a>
 			</div>
 		</div>

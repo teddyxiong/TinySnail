@@ -52,7 +52,7 @@ class SignIn extends Base{
 			];
 			// 登录
 			$lib_user =  new User();
-			$lib_user->setSiteCookie($cookie_info);
+			$lib_user->setSiteCookie($cookie_info,SN_COOKIE_EXPIRE_TIME);
 
 			// 更新最近登录记录
 			$user_model->lastLogin($uuid);

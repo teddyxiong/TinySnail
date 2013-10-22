@@ -59,6 +59,8 @@ class AddTask extends Base{
 
 			$task_id = $task_model->addTask($post);
 			if (!empty($task_id)) {
+				$user_model = new UserModel();
+				$user_model->modifyScore($this->uid, 'create_task'); // 增加积分
 				$url = DOMAIN."/jump/addtask/$task_id";
 				$this->pageJump($url);
 			}

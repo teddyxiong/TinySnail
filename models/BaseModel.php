@@ -43,6 +43,13 @@ class BaseModel {
 			$ret['default_url'] = DOMAIN."/article_detail/{$callback_id}/#comment";
 			$ret['plans_url'] = DOMAIN;
 			$ret['mrefreshtime'] = 3000; //默认3秒后跳转
+		} else if ('taskattach' == $type) {
+			$ret['label_txt_1'] = '附加信息';
+			$ret['label_txt_2'] = '任务详情';
+			$ret['label_txt_3'] = '任务列表';
+			$ret['default_url'] = DOMAIN."/task_detail/{$callback_id}/";
+			$ret['plans_url'] = DOMAIN;
+			$ret['mrefreshtime'] = 3000; //默认3秒后跳转
 		} else {
 			return false;
 		}

@@ -15,6 +15,7 @@ class TaskDetail extends HotData{
 		$comment_model = new CommentModel();
 		$task_cate_model = new TaskCateModel();
 		$article_model = new ArticleModel();
+		$user_model = new UserModel();
 
 		// 推荐相关的数据
 		$this->initHotData();  
@@ -97,6 +98,7 @@ class TaskDetail extends HotData{
 			if (!empty($comment_id)) { 
 				$task_model->comments($id); // 评论数加1
 				$task_model->modifyLastComment($id, $login_user_info['user_name']); // 最后评论时间
+				$user_model->modifyScore($this->uid, 'create_comment'); // 增加积分
 				$mem_obj->set($mem_key, $comment_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
 				$url = DOMAIN."/jump/taskcomment/$id";
 				$this->pageJump($url);
@@ -131,6 +133,7 @@ class TaskDetail extends HotData{
 			if (!empty($reply_id)) { 
 				$task_model->comments($id); // 评论数加1
 				$task_model->modifyLastComment($id, $login_user_info['user_name']); // 最后评论时间
+				$user_model->modifyScore($this->uid, 'create_comment'); // 增加积分 
 				$mem_obj->set($mem_key, $reply_id, MEMCACHE_COMPRESSED,COMMENT_MAX_EXTENT);
 				$url = DOMAIN."/jump/taskcomment/$id";
 				$this->pageJump($url);
@@ -176,11 +179,60 @@ class TaskDetail extends HotData{
 			$task_info['schedule_txt_local'] = "left";
 		}
 
+		// 附加信息
+		$this->attach($id, $task_info['uid']);
+
 		$this->tpl->assign('task_info',$task_info);
 		$this->tpl->assign('all_cate',$all_cate);
 		$this->tpl->assign('comments',$comments);
 		$this->tpl->assign('reply_list',$reply_list);
 		$this->tpl->assign('page',$page);
 		$this->tpl->display('task_detail.html');
+	}
+
+	private function attach($tid, $uid) {
+		$attach_model = new AttachInfoModel();
+		$task_model = new TaskModel();
+		$user_model = new UserModel();
+
+		$posttype = p('posttype', true, '');
+		if ('attach' == $posttype && $this->uid == $uid) {
+			$div_id = 'attach_info_alert_danger';
+			$posts = [];
+			$post['aiid'] = NULL;
+			$posts['content'] = p('attach_info', true, '');
+			$posts['uid'] = $this->uid;
+			$posts['tid'] = $tid;
+			$posts['create_time'] = time();
+			$posts['create_ip'] = get_client_ip();
+
+			if (empty($posts['content']) || mb_strlen($posts['content']) < 3 || mb_strlen($posts['content']) > 180) {
+				$error = "附加内容必需大于3个字符小于180个字符。";
+				$this->veiwNotice($error, $div_id);
+			}
+			$aiid = $attach_model->add($posts);
+
+			if (!empty($aiid)) { 
+				$task_model->modifyLastSubmit($tid); // 最后更新时间
+				$user_model->modifyScore($uid, 'create_attach_info'); // 增加积分 
+				$url = DOMAIN."/jump/taskattach/$tid";
+				$this->pageJump($url);
+			}
+			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
+		}
+
+		$attach_info_list = $attach_model->fetchAllByTid($tid);
+
+		if(true === $attach_info_list) $attach_info_list = NULL;
+
+		if (!empty($attach_info_list['aiid'])) {
+			$attach_info_list['create_time'] = fromat_view_date($attach_info_list['create_time']);
+			$this->tpl->assign('attach_info_list',array(0=>$attach_info_list));
+		} else {
+			foreach($attach_info_list as $k=>$v) {
+				$attach_info_list[$k]['create_time'] = fromat_view_date($v['create_time']);
+			}
+			$this->tpl->assign('attach_info_list',$attach_info_list);
+		}
 	}
 }

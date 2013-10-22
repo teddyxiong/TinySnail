@@ -8,6 +8,7 @@ class UserModel extends BaseModel {
 
 	public $tb_users = 'users';
 	public $tb_bind_users = 'bind_users';
+	public $tb_user_score_log = 'user_score_log';
 
 	public function lastLogin($uid) {
 		$now = time();
@@ -15,6 +16,7 @@ class UserModel extends BaseModel {
 		$set = ['user_last_timeline'=>$now, 'user_last_ip'=>$ip];
 		$where = ['uid'=>$uid];
 
+		$this->modifyScore($uid, 'login')
 		return $this->db->Update($this->tb_users, $set, $where);
 	}
 
@@ -88,7 +90,9 @@ class UserModel extends BaseModel {
 				];
 				$ret = $this->db->Insert($vars, $this->tb_users);
 				if ($ret) {
-					return $this->db->LastInsertID();
+					$uid = $this->db->LastInsertID();
+					$this->modifyScore($uid, 'register')
+					return $uid;
 				}
 				return null;
 			} else {
@@ -138,6 +142,30 @@ class UserModel extends BaseModel {
 			return $user_info;
 		}
 		return null; 
+	}
+
+	public function modifyScore($uid, $score_type='regisger') {
+		$score_config = require PATH_CONF . "/score_config.php";
+		if (!$score_config[$score_type]) {
+			return false;
+		}
+
+		$score = $score_config[$score_type]['score'];
+		$query = "update {$this->tb_users} set total_score=total_score+$score where uid='$uid'";
+		$this->db->ExecuteSQL($query);
+
+		$posts = [
+			'slid'=>NULL, 
+			'uid'=>$uid, 
+			'score'=>$score_config[$score_type]['score'],
+			'reason'=>$score_config[$score_type]['reason'],
+			'create_ip'=>get_client_ip(), 
+			'create_time'=>time()
+		];
+
+		$this->db->Insert($posts, $this->tb_user_score_log);
+		$log_id = $this->db->LastInsertID();
+		return $log_id;
 	}
 
 	public function signUp() {

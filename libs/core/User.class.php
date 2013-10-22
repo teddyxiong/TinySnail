@@ -54,7 +54,7 @@ class User {
 		return setcookie($key,$value,$cookie_time,$cookie_path,$cookie_domain,$securei,$httponly);
 	}
 
-	function setSiteCookie($info, $cookie_time=86400) {
+	function setSiteCookie($info, $cookie_time=SN_COOKIE_EXPIRE_TIME) {
 		$sign = md5(substr(md5($info['user_password']), 0, 20 ).'Snail'.substr(md5($info['uid'].$info['binduid'] ), 10, 20 ) );
 
 		$user = [

@@ -214,6 +214,12 @@ class TaskModel extends BaseModel {
 		return $this->db->ExecuteSQL($query);
 	}
 
+	public function modifyLastSubmit($id) {
+		$t = time();
+		$query = "update {$this->tb_tasks} set comment_last_time='$t' where tid='$id'"; 
+		return $this->db->ExecuteSQL($query);
+	}
+
 	public function comments($id) {
 		$query = "update {$this->tb_tasks} set comments=comments+1 where tid='$id'"; 
 		return $this->db->ExecuteSQL($query);
