@@ -16,7 +16,7 @@ class UserModel extends BaseModel {
 		$set = ['user_last_timeline'=>$now, 'user_last_ip'=>$ip];
 		$where = ['uid'=>$uid];
 
-		$this->modifyScore($uid, 'login')
+		$this->modifyScore($uid, 'login');
 		return $this->db->Update($this->tb_users, $set, $where);
 	}
 
@@ -91,7 +91,7 @@ class UserModel extends BaseModel {
 				$ret = $this->db->Insert($vars, $this->tb_users);
 				if ($ret) {
 					$uid = $this->db->LastInsertID();
-					$this->modifyScore($uid, 'register')
+					$this->modifyScore($uid, 'register');
 					return $uid;
 				}
 				return null;
