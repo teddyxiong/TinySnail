@@ -50,6 +50,13 @@ class BaseModel {
 			$ret['default_url'] = DOMAIN."/task_detail/{$callback_id}/";
 			$ret['plans_url'] = DOMAIN;
 			$ret['mrefreshtime'] = 3000; //默认3秒后跳转
+		} else if ('settings' == $type) {
+			$ret['label_txt_1'] = '说明信息';
+			$ret['label_txt_2'] = '设置';
+			$ret['label_txt_3'] = '设置页面';
+			$ret['default_url'] = DOMAIN."/u/{$callback_id}/?tab=settings";
+			$ret['plans_url'] = DOMAIN;
+			$ret['mrefreshtime'] = 3000; //默认3秒后跳转
 		} else {
 			return false;
 		}

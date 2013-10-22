@@ -3,7 +3,27 @@
 <!-- Default panel contents -->
 <div class="panel-heading">设置中心</div>                                                                         
 <div class="panel-body">
-正在建设,请11月再来......
-</table>            
+<!-- 提示 -->
+<div class="form-group">
+	<div class="alert alert-danger" style="display:none" id="alert_danger">
+		<strong>标题输入不合法...</strong>
+	</div>
+</div>
+<!-- /提示 -->
+
+{{if $login_uid>0}}
+<form class="form-inline" role="form"action="" method="post" target="inner_post_iframe">
+<input type="hidden" name="posttype" value="setting"/>
+<div class="form-group">
+<label class="sr-only" for=""></label>
+<input type="text" class="form-control" name="about_me" size="86" placeholder="请输入说明信息..." value="{{$user_info.about_me}}">
+</div>
+<button type="submit" class="btn btn-info">&nbsp;提&nbsp;交&nbsp;</button>
+</form>
+{{/if}}
+
 </div>
 </div>
+
+
+<iframe name="inner_post_iframe" style="display:none;width:98%;height:300px;"></iframe>

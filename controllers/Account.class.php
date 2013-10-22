@@ -25,7 +25,11 @@ class Account extends Base{
 			$this->setFans($user_info['uid']);
 		} elseif ('follower' == $tab) {
 			$this->setFollower($user_info['uid']);
+		}elseif ('settings' == $tab) {
+			$this->setSetting($user_info['uid']);
 		}
+
+
 
 		$this->userRelation($user_info['uid'], $user_name);
 		
@@ -156,5 +160,26 @@ class Account extends Base{
 		
 		$this->tpl->assign('articles',$list);
 		$this->tpl->assign('page_info',$page_info);
+	}
+
+	private function setSetting($uid) {
+		$user_model = new UserModel();
+		$posttype = p('posttype', true, '');
+		if ('setting' == $posttype && $this->uid == $uid) {
+			echo "xxx";
+			$div_id = 'alert_danger';
+			$about_me = p('about_me', true, '');
+			if (empty($about_me) || mb_strlen($about_me) < 3 || mb_strlen($about_me) > 180) {
+				$error = "说明信息必需大于3个字符小于180个字符。";
+				$this->veiwNotice($error, $div_id);
+			}
+
+			if (!empty($user_model->updateAboutMe($this->uid, $about_me))) {
+				$url = DOMAIN."/jump/settings/{$this->user_info['user_name']}";
+				$this->pageJump($url);
+			}
+			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
+		}
+
 	}
 }

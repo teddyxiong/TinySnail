@@ -16,6 +16,7 @@ CREATE TABLE `users` (
 		`user_last_timeline` int(11) NOT NULL DEFAULT '0',
 		`user_last_ip` varchar(39) NOT NULL DEFAULT '0.0.0.0',
 		`total_score` int(10) not null default '0',
+		`about_me` varchar(200) not null default '',
 		PRIMARY KEY (`uid`),
 		UNIQUE KEY `user_name` (`user_name`),
 		UNIQUE KEY `user_email` (`user_email`)

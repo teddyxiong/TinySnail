@@ -144,6 +144,11 @@ class UserModel extends BaseModel {
 		return null; 
 	}
 
+	public function updateAboutMe($uid, $info) {
+		$query = "update {$this->tb_users} set about_me='{$info}' where uid='$uid'";
+		return $this->db->ExecuteSQL($query);
+	}
+
 	public function modifyScore($uid, $score_type='regisger') {
 		$score_config = require PATH_CONF . "/score_config.php";
 		if (!$score_config[$score_type]) {

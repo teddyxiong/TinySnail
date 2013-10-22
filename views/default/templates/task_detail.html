@@ -66,17 +66,16 @@
 				<form class="form-inline" role="form"action="" method="post"              target="inner_post_iframe">
 				<input type="hidden" name="posttype" value="attach"/>
 				<div class="form-group">
-				<label class="sr-only" for="">附加信息:</label>
-				<input type="text" class="form-control" name="attach_info" size="88" placeholder="请输入附加信息...">
+				<label class="sr-only" for="">追加记录:</label>
+				<input type="text" class="form-control" name="attach_info" size="86" placeholder="请输入追加信息...">
 				</div>
-				&nbsp;
 				<button type="submit" class="btn btn-info">&nbsp;提&nbsp;交&nbsp;</button>
 				</form>
 {{/if}}
 				<br/>
 {{if isset($attach_info_list) }}
 				<div class="panel panel-info">
-				  <div class="panel-heading">附加信息：</div>
+				  <div class="panel-heading">追加记录：</div>
 				    <div class="panel-body">
 {{foreach from=$attach_info_list item=attach}}
 					<p class="text-info">{{$attach.content}}&nbsp;&nbsp;<small>[&nbsp;发表于：{{$attach.create_time}}&nbsp;]</small></p>
