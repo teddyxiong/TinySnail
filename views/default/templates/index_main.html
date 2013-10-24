@@ -3,13 +3,14 @@
 <!-- Default panel contents -->
 <div class="panel-heading">任务列表</div>
 <div class="panel-body">
-<button type="button" id="add_task" class="btn btn-primary">发布任务</button>
+<button type="button" id="add_task" data-placement="top" class="btn btn-primary" login_uid="{{$login_uid}}" data-toggle="popover" title="" data-content="只有在&nbsp;[&nbsp;<a href='/signin'>登录</a>&nbsp;]&nbsp;以后才能发布任务！" data-original-title="<strong>友情提示：</strong>" data-html="true">发布任务</button>
 &nbsp;&nbsp;
 快速帮助：
-<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_tent">宗旨</button>
-<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_rule">规则</button>
-<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_philosophy">哲学</button>
-<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_integral">积分</button>
+<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_rule">玩转这里</button>
+<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_philosophy">一点哲学</button>
+<button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_integral">不是彩蛋</button>
+<!--button class="btn btn-default" type="button" data-toggle="modal" data-target="#help_tent">宗旨</button-->
+<a href="http://sanrenbang.net/tinysnail/" target="__blank">问题反馈</a>
 </div>
 
 <!-- tasks list-->

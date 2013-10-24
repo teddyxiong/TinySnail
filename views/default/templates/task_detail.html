@@ -128,7 +128,7 @@
 					{{$item.comment}}
 				</div>
 				<div style="text-align: right;">
-					<a href="javascript:void(0);" id="reply_comment_button_{{$item.cid}}" comment_cid="{{$item.cid}}">回复此评论</a>
+					<a href="javascript:void(0);" id="reply_comment_button_{{$item.cid}}" comment_cid="{{$item.cid}}" login_uid="{{$login_uid}}">回复此评论</a>
 				</div>
 
 				<!-- 提示 -->
@@ -162,7 +162,7 @@
 							回复@<a href="?{{$reply_info.reply_uid}}">{{$reply_info.reply_username}}</a>：{{$reply_info.reply}}
 						</div> 
 						<div style="text-align: right;">
-							<a href="javascript:void(0);" id="reply_reply_button_{{$reply_info.rid}}" reply_id="{{$reply_info.rid}}" >回复此评论</a>
+							<a href="javascript:void(0);" id="reply_reply_button_{{$reply_info.rid}}" reply_id="{{$reply_info.rid}}" login_uid="{{$login_uid}}">回复此评论</a>
 						</div>
 
 						<!-- 提示 -->

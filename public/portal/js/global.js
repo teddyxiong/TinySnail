@@ -58,6 +58,16 @@ $("a[id^='reply_comment_button_']").click(function() {
 
 	var reply_div_id = "#reply_div_"+comment_cid;
 	var reply_status = $(reply_div_id).css('display');
+
+
+	var login_uid = $(this).attr("login_uid");
+
+	if (login_uid == 0 || login_uid < 0) {
+		$("#alert_danger_"+comment_cid).html("<a href='/signin'>登录</a>后才能进行评论！");
+		$("#alert_danger_"+comment_cid).show();
+		return;
+	}
+
 	if ('none' == reply_status) {
 		$(reply_div_id).show();
 	} else {
@@ -72,6 +82,15 @@ $("a[id^='reply_reply_button_']").click(function() {
 
 	var reply_reply_div_id = "#reply_reply_div_"+rid;
 	var reply_reply_status = $(reply_reply_div_id).css('display');
+
+	 var login_uid = $(this).attr("login_uid");
+
+	 if (login_uid == 0 || login_uid < 0) {
+		$("#reply_alert_danger_"+rid).html("<a href='/signin'>登录</a>后才能进行评论！");
+		$("#reply_alert_danger_"+rid).show();
+		return;
+	 }
+
 	if ('none' == reply_reply_status) {
 		$(reply_reply_div_id).show();
 	} else {
@@ -82,6 +101,11 @@ $("a[id^='reply_reply_button_']").click(function() {
 
 // entry the task 
 $("button#add_task").click(function(){
+	var login_uid = $(this).attr("login_uid");
+	if ('' == login_uid || login_uid < 0) {
+		$(this).popover('toggle');
+		return;
+	}
 	location.href = "/addtask";
 });
 

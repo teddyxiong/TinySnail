@@ -4,12 +4,18 @@ class SignIn extends Base{
 
 	public $code;
 	public $github;
+	private $referer_key;
 
 	public function __construct()
 	{
 		Base::__construct(); 
 		$this->github = new GitHub();
 		$this->code = g('code', false, false);
+
+		$this->referer_key = $this->uid."referer";
+		if (empty($_COOKIE[$this->referer_key])) {
+			setcookie($this->referer_key, $_SERVER['HTTP_REFERER']);
+		}
 	}
 
 	public function run() {
@@ -56,6 +62,9 @@ class SignIn extends Base{
 
 			// 更新最近登录记录
 			$user_model->lastLogin($uuid);
+			if (!empty($_COOKIE[$this->referer_key])) {
+				redirect($_COOKIE[$this->referer_key]);
+			}
 			redirect(DOMAIN);
 		}
 		//$this->tpl->assign('name','Ned');

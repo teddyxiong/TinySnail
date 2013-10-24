@@ -166,7 +166,6 @@ class Account extends Base{
 		$user_model = new UserModel();
 		$posttype = p('posttype', true, '');
 		if ('setting' == $posttype && $this->uid == $uid) {
-			echo "xxx";
 			$div_id = 'alert_danger';
 			$about_me = p('about_me', true, '');
 			if (empty($about_me) || mb_strlen($about_me) < 3 || mb_strlen($about_me) > 180) {

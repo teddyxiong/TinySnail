@@ -8,6 +8,10 @@ class AddTask extends Base{
 		$task_model = new TaskModel();
 		$task_cate_model = new TaskCateModel();
 
+		if (empty($this->uid) || $this->uid < 0) {
+			redirect(DOMAIN);
+		}
+
 		$post_type = p('post_type', false, '');
 
 		if ('add_task' == $post_type) {
