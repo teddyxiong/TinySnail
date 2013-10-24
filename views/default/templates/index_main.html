@@ -17,9 +17,9 @@
 <tbody>
 {{foreach from=$tasks item="task_info"}}
 <tr class="row">
-<td class="col-xs-12 col-md-1"> <span class="badge" title="点击数">{{$task_info.hits}}</span> </td>
-<td class="col-xs-12 col-md-1"><span class="badge" title="评论数">{{$task_info.comments}}</span></td> 
-<td class="col-xs-12 col-md-1" style="margin: -5 -5;">
+<td class="col-xs-12 col-md-1" style="text-align:center;vertical-align:middle;"> <span class="badge" title="点击数">{{$task_info.hits}}</span> </td>
+<td class="col-xs-12 col-md-1" style="text-align:center;vertical-align:middle;"><span class="badge" title="评论数">{{$task_info.comments}}</span></td> 
+<td class="col-xs-12 col-md-1" style="text-align: center;vertical-align:middle;">
 {{if $task_info.status eq $smarty.const.TASK_STATUS_DELETED}}
 <span class="badge" title="已删除">del</span> <!--已删除-->
 {{else if $task_info.status eq $smarty.const.TASK_STATUS_ONGOING}}
