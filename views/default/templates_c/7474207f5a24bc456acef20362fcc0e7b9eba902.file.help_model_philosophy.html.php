@@ -1,4 +1,25 @@
-<!-- helpPhilosophy -->
+<?php /* Smarty version Smarty-3.1.13, created on 2013-10-25 15:22:03
+         compiled from "/HTML/TinySnail/views/default/templates/help_model_philosophy.html" */ ?>
+<?php /*%%SmartyHeaderCode:1406747708526005f6d14b88-90888739%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    '7474207f5a24bc456acef20362fcc0e7b9eba902' => 
+    array (
+      0 => '/HTML/TinySnail/views/default/templates/help_model_philosophy.html',
+      1 => 1382685282,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '1406747708526005f6d14b88-90888739',
+  'function' => 
+  array (
+  ),
+  'version' => 'Smarty-3.1.13',
+  'unifunc' => 'content_526005f6d182f0_61171004',
+  'has_nocache_code' => false,
+),false); /*/%%SmartyHeaderCode%%*/?>
+<?php if ($_valid && !is_callable('content_526005f6d182f0_61171004')) {function content_526005f6d182f0_61171004($_smarty_tpl) {?><!-- helpPhilosophy -->
 <div class="modal fade" id="help_philosophy" tabindex="-1" role="dialog" aria-                        
 labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog">
@@ -48,3 +69,4 @@ labelledby="myModalLabel" aria-hidden="true">
 	</div><!-- /.modal-dialog -->
 	</div><!-- /.helpmodal -->
 
+<?php }} ?>
