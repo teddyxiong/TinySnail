@@ -78,7 +78,7 @@ class TaskDetail extends HotData{
 
 			$last_comment_id = $mem_obj->get($mem_key);
 			if (!empty($last_comment_id)) {
-				$error = "对不起，5分钟内您只能发表一次评论。";                                               
+				$error = "对不起，1分钟内您只能发表一次评论。";                                               
 				$this->veiwNotice($error, $div_id);
 			}
 
@@ -112,7 +112,7 @@ class TaskDetail extends HotData{
 			$mem_key = "last_comment_user_{$post['uid']}";
 			$last_comment_id = $mem_obj->get($mem_key);
 			if (!empty($last_comment_id)) {
-				$error = "对不起，5分钟内您只能发表一次评论。";                                               
+				$error = "对不起，1分钟内您只能发表一次评论。";                                               
 				$this->veiwNotice($error, $div_id);
 			}
 

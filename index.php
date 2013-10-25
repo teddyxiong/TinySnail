@@ -1,6 +1,7 @@
 <?php
 include 'init.php';
 
+header("Content-type: text/html; charset=utf-8");
 $controller = g('controller',false, 'Index');
 $controller_name = get_class_name($controller);
 $controller_file = PATH_CONTROLLERS.DS.$controller_name.'.class.php';

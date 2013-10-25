@@ -18,8 +18,8 @@ class Template extends Smarty {
 
 		//$this->caching = Smarty::CACHING_LIFETIME_CURRENT;
 		$this->caching = 0;
-		$this->assign('project', 'TinySnail');
-		$this->assign('title', 'TinySnail-任务发生器。');
+		$this->assign('project', 'TinySnail （测试版）');
+		$this->assign('title', 'TinySnail');
 
 		$login_user_info = User::getCurrentLoginUser();
 		$login_uid = User::getUid();
