@@ -28,7 +28,7 @@ define('COMMENT_MAX_EXTENT', 60); // 多长时间限用户评论1次，防灌水
 define('COMMENT_PAGE_OFFSET', 30); // 每页显示的评论数。
 
 #memcache set
-define('MEMCACHE_HOST', '192.168.1.123');
+define('MEMCACHE_HOST', '127.0.0.1');
 define('MEMCACHE_PORT', 12111);
 
 #task set

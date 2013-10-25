@@ -173,7 +173,7 @@ class Account extends Base{
 				$this->veiwNotice($error, $div_id);
 			}
 
-			if (!empty($user_model->updateAboutMe($this->uid, $about_me))) {
+			if ($user_model->updateAboutMe($this->uid, $about_me)) {
 				$url = DOMAIN."/jump/settings/{$this->user_info['user_name']}";
 				$this->pageJump($url);
 			}
