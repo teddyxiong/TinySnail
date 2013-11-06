@@ -56,6 +56,9 @@ class ArticleModel extends BaseModel {
 		$query .= "order by hits DESC LIMIT $num";
 		$list = $this->db->ExecuteSQL($query);
 		if ($list) {
+			if (!empty($list['aid'])) {
+				return array(0=>$list);
+			}
 			return $list;
 		}
 		return null;
