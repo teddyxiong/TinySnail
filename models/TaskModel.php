@@ -132,6 +132,14 @@ class TaskModel extends BaseModel {
 		}
 	}
 
+	public function modifyTask($tid, $sets) {
+		$ret = $this->db->Update($this->tb_tasks, $sets, array('tid'=>$tid));
+		if ($ret) {
+			return $ret;
+		}
+		return null;
+	}
+
 	public function addTask($task_info) {
 		$this->db->Insert($task_info, $this->tb_tasks);
 		$id = $this->db->LastInsertID();

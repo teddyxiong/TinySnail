@@ -49,6 +49,7 @@
 {{/if}}
 {{if $task_info.status eq $smarty.const.TASK_STATUS_ONGOING}}
 				    <li><span class="label label-info">任务正在进行中</span></li>
+				    {{if $task_info.uid eq $uid}}<li><a href="/addtask/?id={{$task_info.tid}}&action=edit">编辑此任务</a></li>{{/if}}
 {{/if}}
 				</ul>
 				</div>

@@ -11,6 +11,18 @@ class AddTask extends Base{
 		if (empty($this->uid) || $this->uid < 0) {
 			redirect(DOMAIN);
 		}
+		
+		$id = g('id', false, '');
+		$action = g('action', false, '');
+		if ($action == 'edit' && !empty($id)) {
+			$task_info = $task_model->fetchOneTask($id); 
+			if (!empty($task_info) && is_array($task_info) && $task_info['uid']==$this->uid) {
+				$task_info['begin_time'] = date("Y-m-d", $task_info['begin_time']);
+				$task_info['finish_time'] = date("Y-m-d", $task_info['finish_time']);
+				$this->tpl->assign('action', $action);
+				$this->tpl->assign('task_info', $task_info);
+			}
+		}
 
 		$post_type = p('post_type', false, '');
 
@@ -61,6 +73,17 @@ class AddTask extends Base{
 			$post['last_time'] = $now; 
 			$post['last_ip'] = $ip;
 
+			$action_type = p('action_type', false, null);
+			$edit_task_id = p('task_id', false, null);
+			if ('edit' == $action_type && !empty($edit_task_id) && $this->uid == $task_info['uid']) {
+				unset($post['tid'], $post['article_id'], $post['point'],$post['status'], $post['comments'],$post['hits'],$post['confirmation_number'], $post['questioned_number'],$post['create_time'],$post['create_ip']);
+				$task_id = $task_model->modifyTask($edit_task_id, $post);
+                        	if (!empty($task_id)) {
+                                	$url = DOMAIN."/jump/addtask/$edit_task_id";
+                                	$this->pageJump($url);
+                        	}
+            			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
+			}
 			$task_id = $task_model->addTask($post);
 			if (!empty($task_id)) {
 				$user_model = new UserModel();
