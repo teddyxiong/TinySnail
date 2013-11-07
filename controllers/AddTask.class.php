@@ -79,7 +79,7 @@ class AddTask extends Base{
 				unset($post['tid'], $post['article_id'], $post['point'],$post['status'], $post['comments'],$post['hits'],$post['confirmation_number'], $post['questioned_number'],$post['create_time'],$post['create_ip']);
 				$task_id = $task_model->modifyTask($edit_task_id, $post);
                         	if (!empty($task_id)) {
-                                	$url = DOMAIN."/jump/addtask/$edit_task_id";
+                                	$url = DOMAIN."/jump/edittask/$edit_task_id";
                                 	$this->pageJump($url);
                         	}
             			$this->veiwNotice("未知错误 [ 数据库写入失败 ] !!!", $div_id);
