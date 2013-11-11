@@ -15,6 +15,14 @@ class ArticleModel extends BaseModel {
 		return $id;
 	}
 
+	public function modifyArticle($aid, $sets) {
+                $ret = $this->db->Update($this->tb_article, $sets, array('aid'=>$aid));
+                if ($ret) {
+                        return $ret;
+                }
+                return null;
+        }
+
 	public function fetchOneArticle($id) {
 		$query = "select a.*,t.tid,t.subject task_subject,t.comments, u.user_name,u.uid,u.avatar from {$this->tb_article} AS a, {$this->tb_users} AS u, {$this->tb_tasks} t where a.aid='$id' and a.uid=u.uid and a.tid=t.tid";
 		$info = $this->db->ExecuteSQL($query);

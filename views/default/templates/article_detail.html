@@ -23,6 +23,7 @@
 				    <li>{{$article_info.hits}} 次阅读</li>
 				    <li><a href="#comment_input">{{$article_info.comments}}</a> 条评论</li>
 				    <li><span class="label label-success">当前任务已完成</span></li>
+{{if $article_info.uid eq $uid}}<li><a href="/addarticle/{{$article_info.tid}}/?id={{$article_info.aid}}&action=edit">编辑此文章</a></li>{{/if}}
 				</ul>
 				</div>
 				<hr/>
