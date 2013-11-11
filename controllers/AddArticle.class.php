@@ -32,6 +32,13 @@ class AddArticle extends Base{
 			redirect(DOMAIN);
 		}
 
+$article_item = $article_model->fetchOneArticleByTid($tid);
+if (!empty($article_item['aid'])) {
+	if ($action != 'edit' && $_POST['action_type'] != 'edit') {
+			redirect(DOMAIN);
+}
+}
+
 		$post_type = p('post_type', false, '');
 
 		if ('add' == $post_type) {
